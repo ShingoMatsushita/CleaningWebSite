@@ -1,53 +1,5 @@
-
-// 言語切り替え機能
-let currentLang = 'ja';
-
-function setLanguage(lang) {
-    currentLang = lang;
-    document.querySelectorAll('[data-ja][data-en]').forEach(element => {
-        if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-            element.placeholder = element.getAttribute(`data-${lang}`);
-        } else {
-            element.textContent = element.getAttribute(`data-${lang}`);
-        }
-    });
-    
-    // 言語ボタンの更新
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    event.target.classList.add('active');
-    
-    // 採用情報の表示/非表示
-    const recruitLink = document.querySelector('.recruit-link');
-    const recruitSection = document.querySelector('.recruit');
-    if (lang === 'ja') {
-        recruitLink.classList.add('show');
-        recruitSection.classList.add('show');
-    } else {
-        recruitLink.classList.remove('show');
-        recruitSection.classList.remove('show');
-    }
-    
-    // ローカルストレージに保存
-    localStorage.setItem('preferred-lang', lang);
-}
-
-// ページ読み込み時に保存された言語設定を適用
+// ページ読み込み時の初期化
 document.addEventListener('DOMContentLoaded', function() {
-    const savedLang = localStorage.getItem('preferred-lang') || 'ja';
-    if (savedLang !== 'ja') {
-        setLanguage(savedLang);
-        document.querySelector(`.lang-btn:nth-child(${savedLang === 'en' ? '2' : '1'})`).classList.add('active');
-        document.querySelector(`.lang-btn:nth-child(${savedLang === 'en' ? '1' : '2'})`).classList.remove('active');
-    }
-    
-    // 初期状態で採用情報を表示
-    if (savedLang === 'ja') {
-        document.querySelector('.recruit-link').classList.add('show');
-        document.querySelector('.recruit').classList.add('show');
-    }
-    
     // ギャラリーのスクロール位置をチェック
     updateGalleryArrows();
     updateToolsArrows();
@@ -311,14 +263,17 @@ if (blogGrid) {
 function openModal(index) {
     const modal = document.getElementById('galleryModal');
     const data = galleryData[index];
-    
+
+    // HTML lang属性から現在の言語を検出
+    const currentLang = document.documentElement.lang || 'ja';
+
     document.getElementById('modalImage').src = data.image;
     document.getElementById('modalTitle').textContent = currentLang === 'ja' ? data.title : data.titleEn;
     document.getElementById('modalDescription').textContent = currentLang === 'ja' ? data.description : data.descriptionEn;
     document.getElementById('modalTime').textContent = currentLang === 'ja' ? data.time : data.timeEn;
     document.getElementById('modalTools').textContent = currentLang === 'ja' ? data.tools : data.toolsEn;
     document.getElementById('modalPrice').textContent = data.price;
-    
+
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
@@ -402,7 +357,8 @@ contactBtns.forEach(btn => {
         btn.addEventListener('click', function(e) {
             if (this.getAttribute('href') === '#') {
                 e.preventDefault();
-                alert(currentLang === 'ja' ? 
+                const currentLang = document.documentElement.lang || 'ja';
+                alert(currentLang === 'ja' ?
                     'お問い合わせありがとうございます。まもなく担当者よりご連絡させていただきます。' :
                     'Thank you for your inquiry. We will contact you shortly.');
             }

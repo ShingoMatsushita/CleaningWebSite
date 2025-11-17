@@ -275,6 +275,7 @@ nav {
     background-position: center;
     background-attachment: fixed;
     overflow: hidden;
+    border-radius: 30px;
 }
 
 .hero::before {
@@ -367,12 +368,14 @@ nav {
 .hero-image {
     position: relative;
     animation: fadeInRight 1s ease;
+    overflow: hidden;
+    border-radius: 25px;
 }
 
 .hero-image img {
     width: 100%;
     height: auto;
-    border-radius: 20px;
+    border-radius: 25px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.15);
 }
 
@@ -1403,9 +1406,29 @@ nav {
 /* CTA セクション */
 .cta {
     padding: 5rem 5%;
-    background: linear-gradient(135deg, var(--accent-color), #0066aa);
-    color: white;
+    background: linear-gradient(to bottom, #0066cc, #3399ff);
+    color: #1a1a1a;
     text-align: center;
+    margin: 0 2rem;
+    border-radius: 30px 30px 0 0;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 -5px 30px rgba(0, 102, 204, 0.2);
+}
+
+@media (max-width: 768px) {
+    .cta {
+        margin: 0 1rem;
+        border-radius: 20px 20px 0 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .cta {
+        margin: 0 0.5rem;
+        border-radius: 15px 15px 0 0;
+    }
 }
 
 .cta-content {
@@ -1451,9 +1474,29 @@ nav {
 
 /* フッター */
 footer {
-    background: var(--primary-color);
-    color: white;
+    background: linear-gradient(to bottom, #3399ff, #66b3ff, #99ccff);
+    color: #1a1a1a;
     padding: 3rem 5% 1rem;
+    margin: 0 2rem 2rem 2rem;
+    border-radius: 0 0 30px 30px;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 10px 40px rgba(0, 102, 204, 0.25);
+}
+
+@media (max-width: 768px) {
+    footer {
+        margin: 0 1rem 1.5rem 1rem;
+        border-radius: 0 0 20px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    footer {
+        margin: 0 0.5rem 1rem 0.5rem;
+        border-radius: 0 0 15px 15px;
+    }
 }
 
 .footer-content {
@@ -1468,13 +1511,14 @@ footer {
 .footer-section h3 {
     font-size: 1.3rem;
     margin-bottom: 1.5rem;
-    color: var(--gold-accent);
+    color: #1a1a1a;
+    font-weight: 700;
 }
 
 .footer-section p,
 .footer-section li {
     line-height: 1.8;
-    opacity: 0.9;
+    opacity: 0.85;
 }
 
 .footer-section ul {
@@ -1486,13 +1530,14 @@ footer {
 }
 
 .footer-section a {
-    color: white;
+    color: #1a1a1a;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .footer-section a:hover {
-    color: var(--gold-accent);
+    color: #0066cc;
+    text-decoration: underline;
 }
 
 .social-links {
@@ -1504,24 +1549,27 @@ footer {
 .social-links a {
     width: 40px;
     height: 40px;
-    background: rgba(255,255,255,0.1);
+    background: rgba(26, 26, 26, 0.1);
+    border: 1px solid rgba(26, 26, 26, 0.3);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+    color: #1a1a1a;
 }
 
 .social-links a:hover {
-    background: var(--accent-color);
+    background: rgba(0, 102, 204, 0.2);
+    border-color: #0066cc;
     transform: translateY(-3px);
 }
 
 .footer-bottom {
     text-align: center;
     padding-top: 2rem;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    opacity: 0.7;
+    border-top: 1px solid rgba(26, 26, 26, 0.15);
+    opacity: 0.8;
 }
 
 /* アニメーション */
@@ -1595,6 +1643,10 @@ footer {
         margin-right: 1rem;
     }
 
+    .hero {
+        border-radius: 20px;
+    }
+
     .hero-content {
         grid-template-columns: 1fr;
         text-align: center;
@@ -1602,6 +1654,11 @@ footer {
 
     .hero-image {
         order: -1;
+        border-radius: 20px;
+    }
+
+    .hero-image img {
+        border-radius: 20px;
     }
 
     .features-container {
@@ -1691,6 +1748,10 @@ footer {
 }
 
 @media (max-width: 480px) {
+    .hero {
+        border-radius: 15px;
+    }
+
     .section-header h2 {
         font-size: 2rem;
     }
@@ -1708,5 +1769,13 @@ footer {
     .btn-secondary {
         padding: 0.8rem 2rem;
         font-size: 0.95rem;
+    }
+
+    .hero-image {
+        border-radius: 15px;
+    }
+
+    .hero-image img {
+        border-radius: 15px;
     }
 }
