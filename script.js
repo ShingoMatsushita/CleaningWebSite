@@ -1,19 +1,749 @@
+// ============================================
+// Header Navigation - 一元管理
+// ============================================
+
+// ルートパスまでの相対パスを計算
+function getRootPath() {
+    const currentPath = window.location.pathname;
+    // パスの深さを計算
+    // 例: /ja/Home.html → ['', 'ja', 'Home.html'] → ['ja'] → 1階層 → ../
+    // 例: /ja/services/airbnb-cleaning.html → ['', 'ja', 'services', 'airbnb-cleaning.html'] → ['ja', 'services'] → 2階層 → ../../
+    const segments = currentPath.split('/').filter(segment => segment && !segment.includes('.html'));
+    const pathDepth = segments.length;
+    // ルートパスを生成（例: 1階層下なら ../、2階層下なら ../../）
+    return '../'.repeat(Math.max(0, pathDepth));
+}
+
+// 日本語ヘッダーを生成
+function getJapaneseHeader(rootPath) {
+    const headerHTML = `
+    <!-- ヘッダー -->
+    <header id="header">
+        <nav>
+            <a href="${rootPath}ja/Home.html#hero">
+                <img src="${rootPath}img/logo.png" alt="Asahi Cleaning" class="logo">
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li class="dropdown">
+                    <a href="${rootPath}ja/Home.html#services">サービス <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="${rootPath}ja/services/airbnb-cleaning.html" class="dropdown-item">
+                            <span class="dropdown-icon">🏠</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Airbnb清掃</span>
+                                <span class="dropdown-desc">ゲスト満足度を高める徹底清掃</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}ja/services/luxury-residential-cleaning.html" class="dropdown-item">
+                            <span class="dropdown-icon">✨</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">高級住宅清掃</span>
+                                <span class="dropdown-desc">富裕層向けプレミアムサービス</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}ja/services/office-cleaning.html" class="dropdown-item">
+                            <span class="dropdown-icon">🏢</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">オフィス清掃</span>
+                                <span class="dropdown-desc">快適な職場環境を維持</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}ja/services/deep-cleaning.html" class="dropdown-item">
+                            <span class="dropdown-icon">🧹</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">ディープクリーニング</span>
+                                <span class="dropdown-desc">隅々まで徹底的に清掃</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}ja/services/japanese-style-styling.html" class="dropdown-item">
+                            <span class="dropdown-icon">🌸</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">和風空間演出</span>
+                                <span class="dropdown-desc">日本の美意識を活かした空間</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}ja/services/regular-cleaning-plan.html" class="dropdown-item">
+                            <span class="dropdown-icon">🔄</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">定期清掃プラン</span>
+                                <span class="dropdown-desc">継続的な清潔を保つ</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="${rootPath}ja/service-areas/index.html">対応エリア <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="${rootPath}ja/service-areas/mosman.html" class="dropdown-item">
+                            <span class="dropdown-icon">📍</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Mosman</span>
+                                <span class="dropdown-desc">高級住宅街エリア</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}ja/service-areas/palm-beach.html" class="dropdown-item">
+                            <span class="dropdown-icon">🏖️</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Palm Beach</span>
+                                <span class="dropdown-desc">美しいビーチエリア</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}ja/service-areas/bondi-beach.html" class="dropdown-item">
+                            <span class="dropdown-icon">🌊</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Bondi Beach</span>
+                                <span class="dropdown-desc">世界的に有名なビーチ</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}ja/service-areas/manly.html" class="dropdown-item">
+                            <span class="dropdown-icon">⛵</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Manly</span>
+                                <span class="dropdown-desc">人気の観光エリア</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="${rootPath}ja/about/features.html">特徴 <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="${rootPath}ja/about/features.html" class="dropdown-item">
+                            <span class="dropdown-icon">⭐</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">当社の強み</span>
+                                <span class="dropdown-desc">選ばれる理由</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}ja/tools/index.html" class="dropdown-item">
+                            <span class="dropdown-icon">🧽</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">使用道具</span>
+                                <span class="dropdown-desc">高品質な日本製品</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}ja/about/cleaning-process.html" class="dropdown-item">
+                            <span class="dropdown-icon">📋</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">クリーニングプロセス</span>
+                                <span class="dropdown-desc">ご利用の流れ</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}ja/about/FAQ.html" class="dropdown-item">
+                            <span class="dropdown-icon">❓</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">FAQ</span>
+                                <span class="dropdown-desc">よくある質問</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li><a href="${rootPath}ja/Home.html#gallery">施工例</a></li>
+                <li class="dropdown">
+                    <a href="#" class="no-link">その他 <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="${rootPath}ja/blog/index.html" class="dropdown-item">
+                            <span class="dropdown-icon">📝</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">ブログ</span>
+                                <span class="dropdown-desc">お掃除のコツと情報</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}ja/about/recruit.html" class="dropdown-item">
+                            <span class="dropdown-icon">💼</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">採用情報</span>
+                                <span class="dropdown-desc">一緒に働きませんか</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}ja/Home.html#testimonials" class="dropdown-item">
+                            <span class="dropdown-icon">💬</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">お客様の声</span>
+                                <span class="dropdown-desc">実際の評価と感想</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li><a href="${rootPath}ja/contact/index.html" class="cta-link">無料見積もり</a></li>
+                <li class="dropdown language-dropdown">
+                    <a href="#" class="no-link">🌐 日本語 <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu language-menu">
+                        <a href="${rootPath}ja/Home.html" class="dropdown-item active">
+                            <span class="dropdown-icon">🇯🇵</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">日本語</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}en/Home.html" class="dropdown-item">
+                            <span class="dropdown-icon">🇦🇺</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">English</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/Home.html" class="dropdown-item">
+                            <span class="dropdown-icon">🇨🇳</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">中文</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+    `;
+    return headerHTML;
+}
+
+// 英語ヘッダーを生成
+function getEnglishHeader(rootPath) {
+    const headerHTML = `
+    <!-- Header -->
+    <header id="header">
+        <nav>
+            <a href="${rootPath}en/Home.html#hero">
+                <img src="${rootPath}img/logo.png" alt="Asahi Cleaning" class="logo">
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="${rootPath}en/Home.html#services">Services</a></li>
+                <li><a href="${rootPath}en/Home.html#features">Features</a></li>
+                <li><a href="${rootPath}en/Home.html#tools">Tools & Products</a></li>
+                <li><a href="${rootPath}en/Home.html#service-area">Service Areas</a></li>
+                <li><a href="${rootPath}en/Home.html#process">Process</a></li>
+                <li><a href="${rootPath}en/Home.html#gallery">Gallery</a></li>
+                <li><a href="${rootPath}en/Home.html#blog">Blog</a></li>
+                <li><a href="${rootPath}en/Home.html#testimonials">Testimonials</a></li>
+                <li><a href="${rootPath}en/Home.html#recruit">Careers</a></li>
+                <li><a href="${rootPath}en/Home.html#contact" class="contact-btn">Contact</a></li>
+                <li class="dropdown language-dropdown">
+                    <a href="#" class="no-link">🌐 EN <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu language-menu">
+                        <a href="${rootPath}ja/Home.html" class="dropdown-item">
+                            <span class="dropdown-icon">🇯🇵</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">日本語</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}en/Home.html" class="dropdown-item active">
+                            <span class="dropdown-icon">🇦🇺</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">English</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/Home.html" class="dropdown-item">
+                            <span class="dropdown-icon">🇨🇳</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">中文</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+    `;
+    return headerHTML;
+}
+
+// 中国語ヘッダーを生成
+function getChineseHeader(rootPath) {
+    const headerHTML = `
+    <!-- 页眉 -->
+    <header id="header">
+        <nav>
+            <a href="${rootPath}zh/Home.html#hero">
+                <img src="${rootPath}img/logo.png" alt="Asahi Cleaning" class="logo">
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li class="dropdown">
+                    <a href="${rootPath}zh/Home.html#services">服务 <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="${rootPath}zh/services/airbnb-cleaning.html" class="dropdown-item">
+                            <span class="dropdown-icon">🏠</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Airbnb清洁</span>
+                                <span class="dropdown-desc">提高客人满意度的彻底清洁</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/services/luxury-residential-cleaning.html" class="dropdown-item">
+                            <span class="dropdown-icon">✨</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">高端住宅清洁</span>
+                                <span class="dropdown-desc">面向高端客户的优质服务</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/services/office-cleaning.html" class="dropdown-item">
+                            <span class="dropdown-icon">🏢</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">办公室清洁</span>
+                                <span class="dropdown-desc">维持舒适的职场环境</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/services/deep-cleaning.html" class="dropdown-item">
+                            <span class="dropdown-icon">🧹</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">深度清洁</span>
+                                <span class="dropdown-desc">彻底清洁每个角落</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/services/japanese-style-styling.html" class="dropdown-item">
+                            <span class="dropdown-icon">🌸</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">日式空间装饰</span>
+                                <span class="dropdown-desc">运用日本美学意识的空间</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/services/regular-cleaning-plan.html" class="dropdown-item">
+                            <span class="dropdown-icon">🔄</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">定期清洁计划</span>
+                                <span class="dropdown-desc">保持持续的清洁</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="${rootPath}zh/service-areas/index.html">服务区域 <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="${rootPath}zh/service-areas/mosman.html" class="dropdown-item">
+                            <span class="dropdown-icon">📍</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Mosman</span>
+                                <span class="dropdown-desc">高端住宅区</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/service-areas/palm-beach.html" class="dropdown-item">
+                            <span class="dropdown-icon">🏖️</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Palm Beach</span>
+                                <span class="dropdown-desc">美丽的海滩区域</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/service-areas/bondi-beach.html" class="dropdown-item">
+                            <span class="dropdown-icon">🌊</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Bondi Beach</span>
+                                <span class="dropdown-desc">世界著名的海滩</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/service-areas/manly.html" class="dropdown-item">
+                            <span class="dropdown-icon">⛵</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Manly</span>
+                                <span class="dropdown-desc">热门旅游区域</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="${rootPath}zh/about/features.html">特点 <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="${rootPath}zh/about/features.html" class="dropdown-item">
+                            <span class="dropdown-icon">⭐</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">我们的优势</span>
+                                <span class="dropdown-desc">被选择的理由</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/tools/index.html" class="dropdown-item">
+                            <span class="dropdown-icon">🧽</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">使用工具</span>
+                                <span class="dropdown-desc">高品质的日本产品</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/about/cleaning-process.html" class="dropdown-item">
+                            <span class="dropdown-icon">📋</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">清洁流程</span>
+                                <span class="dropdown-desc">使用流程</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/about/FAQ.html" class="dropdown-item">
+                            <span class="dropdown-icon">❓</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">常见问题</span>
+                                <span class="dropdown-desc">常见问题</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li><a href="${rootPath}zh/Home.html#gallery">施工实绩</a></li>
+                <li class="dropdown">
+                    <a href="#" class="no-link">其他 <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="${rootPath}zh/blog/index.html" class="dropdown-item">
+                            <span class="dropdown-icon">📝</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">博客</span>
+                                <span class="dropdown-desc">清洁技巧和信息</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/about/recruit.html" class="dropdown-item">
+                            <span class="dropdown-icon">💼</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">招聘信息</span>
+                                <span class="dropdown-desc">一起工作吧</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/Home.html#testimonials" class="dropdown-item">
+                            <span class="dropdown-icon">💬</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">客户评价</span>
+                                <span class="dropdown-desc">实际评价和感想</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li><a href="${rootPath}zh/contact/index.html" class="cta-link">免费报价</a></li>
+                <li class="dropdown language-dropdown">
+                    <a href="#" class="no-link">🌐 中文 <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu language-menu">
+                        <a href="${rootPath}ja/Home.html" class="dropdown-item">
+                            <span class="dropdown-icon">🇯🇵</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">日本語</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}en/Home.html" class="dropdown-item">
+                            <span class="dropdown-icon">🇦🇺</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">English</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/Home.html" class="dropdown-item active">
+                            <span class="dropdown-icon">🇨🇳</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">中文</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+    `;
+    return headerHTML;
+}
+
+// 共有ヘッダーを初期化
+function initSharedHeader() {
+    const headerElement = document.getElementById('header');
+    if (!headerElement) return;
+    
+    // 既に内容がある場合はスキップ（手動で記述されている場合）
+    const currentContent = headerElement.innerHTML.trim();
+    if (currentContent && 
+        !currentContent.includes('<!-- ヘッダー（自動生成） -->') && 
+        !currentContent.includes('<!-- ヘッダー -->') && 
+        !currentContent.includes('<!-- Header -->')) {
+        // 空でない場合は既存のheaderを使用
+        return;
+    }
+    
+    // 現在のページのパスから言語を判定
+    const currentPath = window.location.pathname;
+    let headerHTML;
+    const rootPath = getRootPath();
+    
+    if (currentPath.includes('/zh/')) {
+        // 中国語ページ
+        headerHTML = getChineseHeader(rootPath);
+    } else if (currentPath.includes('/ja/')) {
+        // 日本語ページ
+        headerHTML = getJapaneseHeader(rootPath);
+    } else if (currentPath.includes('/en/')) {
+        // 英語ページ
+        headerHTML = getEnglishHeader(rootPath);
+    } else {
+        // デフォルトは日本語
+        headerHTML = getJapaneseHeader(rootPath);
+    }
+    
+    // ヘッダーを挿入
+    headerElement.innerHTML = headerHTML;
+}
+
+// ============================================
 // ページ読み込み時の初期化
+// ============================================
 document.addEventListener('DOMContentLoaded', function() {
-    // ギャラリーのスクロール位置をチェック
-    updateGalleryArrows();
-    updateToolsArrows();
-    updateBlogArrows();
+    // まずヘッダーを生成（他の初期化より先に実行）
+    initSharedHeader();
+    
+    // 少し遅延させてから他の初期化を実行（DOM更新を待つ）
+    setTimeout(() => {
+        // モバイルメニューの初期化（header生成後）
+        initMobileMenu();
+        
+        // スムーズスクロールの初期化
+        initSmoothScroll();
+        
+        // ギャラリーのスクロール位置をチェック
+        updateGalleryArrows();
+        updateToolsArrows();
+        updateBlogArrows();
+
+        // カーソルエフェクトの初期化
+        initCursorEffect();
+
+        // パララックス効果の初期化
+        initParallax();
+
+        // ヘッダースクロールエフェクトの初期化
+        initHeaderScroll();
+
+        // ドロップダウンメニューの初期化
+        initDropdownMenus();
+
+        // サービスチップの初期化
+        initServiceChips();
+
+        // 言語切替の初期化
+        initLanguageSwitchers();
+    }, 0);
 });
 
-// モバイルメニュー
-const menuToggle = document.getElementById('menuToggle');
-const navLinks = document.getElementById('navLinks');
+// ヘッダースクロールエフェクト
+function initHeaderScroll() {
+    const header = document.getElementById('header');
+    let lastScrollY = 0;
+    let ticking = false;
 
-menuToggle.addEventListener('click', function() {
-    navLinks.classList.toggle('active');
-    menuToggle.classList.toggle('active');
-});
+    function updateHeader() {
+        const scrollY = window.pageYOffset;
+
+        if (scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+
+        lastScrollY = scrollY;
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            window.requestAnimationFrame(updateHeader);
+            ticking = true;
+        }
+    }, { passive: true });
+}
+
+// ドロップダウンメニュー機能
+function initDropdownMenus() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const link = dropdown.querySelector('a');
+        const menu = dropdown.querySelector('.dropdown-menu');
+        let isOpen = false;
+        let closeTimeout;
+
+        // モバイルでのタッチ対応
+        if ('ontouchstart' in window) {
+            link.addEventListener('click', function(e) {
+                // ドロップダウンがある場合のみ処理
+                if (menu) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // 他のドロップダウンを閉じる
+                    dropdowns.forEach(other => {
+                        if (other !== dropdown) {
+                            other.classList.remove('active');
+                        }
+                    });
+
+                    // トグル
+                    isOpen = !isOpen;
+                    dropdown.classList.toggle('active', isOpen);
+                }
+            });
+        }
+
+        // デスクトップでのマウス対応
+        dropdown.addEventListener('mouseenter', function() {
+            clearTimeout(closeTimeout);
+            dropdown.classList.add('active');
+        });
+
+        dropdown.addEventListener('mouseleave', function() {
+            closeTimeout = setTimeout(() => {
+                dropdown.classList.remove('active');
+            }, 200);
+        });
+    });
+
+    // 外側クリックで閉じる
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+}
+
+// サービスチップ（ショートカット）機能
+function initServiceChips() {
+    const groups = document.querySelectorAll('.choice-chips');
+
+    groups.forEach(group => {
+        const targetId = group.dataset.target;
+        const target = targetId ? document.getElementById(targetId) : null;
+        const buttons = Array.from(group.querySelectorAll('button[data-value]'));
+
+        if (!buttons.length) return;
+
+        const setActive = (value) => {
+            buttons.forEach(btn => {
+                btn.classList.toggle('active', value && btn.dataset.value === value);
+            });
+        };
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const value = button.dataset.value;
+                if (target) {
+                    target.value = value;
+                    target.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+                setActive(value);
+            });
+        });
+
+        if (target) {
+            target.addEventListener('change', () => setActive(target.value));
+            setActive(target.value);
+        }
+    });
+}
+
+// 言語切替 (グローブ) メニュー
+function initLanguageSwitchers() {
+    const switchers = document.querySelectorAll('.language-switcher');
+
+    if (!switchers.length) return;
+
+    switchers.forEach(switcher => {
+        const toggle = switcher.querySelector('.lang-toggle');
+        if (!toggle) return;
+
+        toggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isOpen = switcher.classList.toggle('open');
+            toggle.setAttribute('aria-expanded', isOpen);
+        });
+    });
+
+    document.addEventListener('click', function(e) {
+        switchers.forEach(switcher => {
+            if (!switcher.contains(e.target)) {
+                switcher.classList.remove('open');
+                const toggle = switcher.querySelector('.lang-toggle');
+                if (toggle) {
+                    toggle.setAttribute('aria-expanded', 'false');
+                }
+            }
+        });
+    });
+}
+
+// カーソル追従エフェクト
+function initCursorEffect() {
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let cursorX = mouseX;
+    let cursorY = mouseY;
+    const root = document.documentElement;
+
+    document.addEventListener('mousemove', function(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function animateCursor() {
+        cursorX += (mouseX - cursorX) * 0.1;
+        cursorY += (mouseY - cursorY) * 0.1;
+
+        root.style.setProperty('--cursor-x', cursorX + 'px');
+        root.style.setProperty('--cursor-y', cursorY + 'px');
+
+        requestAnimationFrame(animateCursor);
+    }
+
+    animateCursor();
+}
+
+// パララックス効果 - 最適化版
+function initParallax() {
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+
+    let ticking = false;
+    let lastScrollY = 0;
+
+    function updateParallax() {
+        const scrolled = lastScrollY;
+        const parallax = scrolled * 0.3; // 効果を軽減
+
+        if (scrolled < hero.offsetHeight) {
+            hero.style.transform = `translateY(${parallax}px)`;
+        }
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+        lastScrollY = window.pageYOffset;
+
+        if (!ticking) {
+            window.requestAnimationFrame(updateParallax);
+            ticking = true;
+        }
+    }, { passive: true }); // passive オプションでパフォーマンス向上
+}
+
+// モバイルメニュー（header生成後に初期化）
+function initMobileMenu() {
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    
+    if (menuToggle && navLinks) {
+        // 既存のイベントリスナーを削除してから追加（重複防止）
+        const newMenuToggle = menuToggle.cloneNode(true);
+        menuToggle.parentNode.replaceChild(newMenuToggle, menuToggle);
+        
+        newMenuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            newMenuToggle.classList.toggle('active');
+        });
+        
+        // メニューリンクをクリックしたら閉じる
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                newMenuToggle.classList.remove('active');
+            });
+        });
+    }
+}
 
 // ギャラリーデータ
 const galleryData = [
@@ -298,59 +1028,132 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-// スクロールアニメーション
+// スクロールアニメーション - より滑らかな実装
 function animateOnScroll() {
     const elements = document.querySelectorAll('.animate-on-scroll');
-    
-    elements.forEach(element => {
+
+    elements.forEach((element, index) => {
         const elementTop = element.getBoundingClientRect().top;
         const elementBottom = element.getBoundingClientRect().bottom;
-        
+
         if (elementTop < window.innerHeight - 100 && elementBottom > 0) {
-            element.classList.add('visible');
+            // スタガー効果のための遅延を追加
+            setTimeout(() => {
+                element.classList.add('visible');
+            }, index * 50);
         }
     });
 }
 
-window.addEventListener('scroll', animateOnScroll);
-window.addEventListener('load', animateOnScroll);
-
-// ヘッダーのスクロール効果
-let lastScroll = 0;
-const header = document.getElementById('header');
-
+// スクロール時のパフォーマンス最適化
+let scrollTimeout;
 window.addEventListener('scroll', function() {
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll > 100) {
-        header.style.background = 'rgba(255, 255, 255, 0.98)';
-        header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
-    } else {
-        header.style.background = 'rgba(255, 255, 255, 0.98)';
-        header.style.boxShadow = '0 1px 10px rgba(0,0,0,0.05)';
+    if (scrollTimeout) {
+        window.cancelAnimationFrame(scrollTimeout);
     }
-    
-    lastScroll = currentScroll;
-});
 
-// スムーズスクロール
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-            // モバイルメニューを閉じる
-            navLinks.classList.remove('active');
-            menuToggle.classList.remove('active');
-        }
+    scrollTimeout = window.requestAnimationFrame(function() {
+        animateOnScroll();
     });
 });
 
-// フォーム送信のシミュレーション
+window.addEventListener('load', animateOnScroll);
+
+// ヘッダーのスクロール効果 - 最適化版
+let lastScroll = 0;
+const header = document.getElementById('header');
+let headerTicking = false;
+
+function updateHeader() {
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll > 100) {
+        header.style.background = 'rgba(255, 255, 255, 0.95)';
+        header.style.backdropFilter = 'blur(20px) saturate(180%)';
+        header.style.boxShadow = '0 8px 32px rgba(0, 128, 204, 0.12)';
+        header.style.borderBottom = '1px solid rgba(0, 128, 204, 0.2)';
+    } else {
+        header.style.background = 'rgba(255, 255, 255, 0.85)';
+        header.style.backdropFilter = 'blur(20px) saturate(180%)';
+        header.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.08)';
+        header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.3)';
+    }
+
+    lastScroll = currentScroll;
+    headerTicking = false;
+}
+
+window.addEventListener('scroll', function() {
+    if (!headerTicking) {
+        window.requestAnimationFrame(updateHeader);
+        headerTicking = true;
+    }
+}, { passive: true });
+
+// スムーズスクロール
+function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                // モバイルメニューを閉じる
+                const navLinks = document.getElementById('navLinks');
+                const menuToggle = document.getElementById('menuToggle');
+                if (navLinks) navLinks.classList.remove('active');
+                if (menuToggle) menuToggle.classList.remove('active');
+            }
+        });
+    });
+}
+
+// フォーム送信処理
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const currentLang = document.documentElement.lang || 'ja';
+        const submitBtn = this.querySelector('.submit-btn');
+        const originalText = submitBtn.innerHTML;
+
+        // ボタンを送信中の状態に変更
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = currentLang === 'ja' ?
+            '<span>送信中...</span>' :
+            '<span>Sending...</span>';
+
+        // フォームデータを取得
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            service: document.getElementById('service').value,
+            message: document.getElementById('message').value
+        };
+
+        // 実際の送信処理はここに実装
+        // 今はシミュレーションとして2秒後に成功メッセージを表示
+        setTimeout(() => {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+
+            // 成功メッセージを表示
+            alert(currentLang === 'ja' ?
+                `お問い合わせありがとうございます、${formData.name}様。\n24時間以内にご返信させていただきます。` :
+                `Thank you for your inquiry, ${formData.name}.\nWe will contact you within 24 hours.`);
+
+            // フォームをリセット
+            contactForm.reset();
+        }, 2000);
+    });
+}
+
+// フォーム送信のシミュレーション（既存のボタン用）
 const contactBtns = document.querySelectorAll('.btn-primary, .contact-btn, .cta-btn');
 contactBtns.forEach(btn => {
     if (btn.getAttribute('href') === '#contact' || btn.getAttribute('href') === '#') {
@@ -366,23 +1169,63 @@ contactBtns.forEach(btn => {
     }
 });
 
-// パフォーマンス最適化: Intersection Observer
+// パフォーマンス最適化: Intersection Observer - より高度な実装
 const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
+    threshold: 0.15,
+    rootMargin: '0px 0px -80px 0px'
 };
 
 const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
+    entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
+            // スタガー効果のための遅延
+            setTimeout(() => {
+                entry.target.classList.add('visible');
+                // アニメーション完了後は監視を停止してパフォーマンス向上
+                observer.unobserve(entry.target);
+            }, index * 100);
         }
     });
 }, observerOptions);
 
-document.querySelectorAll('.animate-on-scroll').forEach(el => {
+// 各要素にアニメーションクラスとobserverを適用
+document.querySelectorAll('.animate-on-scroll').forEach((el, index) => {
+    // 初期状態を設定（CSSで設定済みなので削除）
     observer.observe(el);
 });
+
+// カードにホバー時の軽量な3D効果を追加（パフォーマンス最適化版）
+function add3DEffect() {
+    // モバイルデバイスでは3D効果をスキップ
+    if (window.innerWidth < 768) return;
+
+    const cards = document.querySelectorAll('.service-card, .area-card');
+
+    cards.forEach(card => {
+        card.addEventListener('mousemove', function(e) {
+            if (!this.matches(':hover')) return;
+
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = (y - centerY) / 20; // 効果を半減
+            const rotateY = (centerX - x) / 20; // 効果を半減
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-15px) scale(1.02)`;
+        });
+
+        card.addEventListener('mouseleave', function() {
+            card.style.transform = '';
+        });
+    });
+}
+
+// ページ読み込み後に3D効果を適用
+setTimeout(add3DEffect, 1000);
 
 // タッチスワイプ対応
 let touchStartX = 0;
