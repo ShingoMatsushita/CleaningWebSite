@@ -180,6 +180,12 @@ function getJapaneseHeader(rootPath) {
                                 <span class="dropdown-title">English</span>
                             </div>
                         </a>
+                        <a href="${rootPath}zh/Home.html" class="dropdown-item">
+                            <span class="dropdown-icon">🇨🇳</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">中文</span>
+                            </div>
+                        </a>
                     </div>
                 </li>
             </ul>
@@ -229,6 +235,198 @@ function getEnglishHeader(rootPath) {
                                 <span class="dropdown-title">English</span>
                             </div>
                         </a>
+                        <a href="${rootPath}zh/Home.html" class="dropdown-item">
+                            <span class="dropdown-icon">🇨🇳</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">中文</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+    `;
+    return headerHTML;
+}
+
+// 中国語ヘッダーを生成
+function getChineseHeader(rootPath) {
+    const headerHTML = `
+    <!-- 页眉 -->
+    <header id="header">
+        <nav>
+            <a href="${rootPath}zh/Home.html#hero">
+                <img src="${rootPath}img/logo.png" alt="Asahi Cleaning" class="logo">
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li class="dropdown">
+                    <a href="${rootPath}zh/Home.html#services">服务 <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="${rootPath}zh/services/airbnb-cleaning.html" class="dropdown-item">
+                            <span class="dropdown-icon">🏠</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Airbnb清洁</span>
+                                <span class="dropdown-desc">提高客人满意度的彻底清洁</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/services/luxury-residential-cleaning.html" class="dropdown-item">
+                            <span class="dropdown-icon">✨</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">高端住宅清洁</span>
+                                <span class="dropdown-desc">面向高端客户的优质服务</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/services/office-cleaning.html" class="dropdown-item">
+                            <span class="dropdown-icon">🏢</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">办公室清洁</span>
+                                <span class="dropdown-desc">维持舒适的职场环境</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/services/deep-cleaning.html" class="dropdown-item">
+                            <span class="dropdown-icon">🧹</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">深度清洁</span>
+                                <span class="dropdown-desc">彻底清洁每个角落</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/services/japanese-style-styling.html" class="dropdown-item">
+                            <span class="dropdown-icon">🌸</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">日式空间装饰</span>
+                                <span class="dropdown-desc">运用日本美学意识的空间</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/services/regular-cleaning-plan.html" class="dropdown-item">
+                            <span class="dropdown-icon">🔄</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">定期清洁计划</span>
+                                <span class="dropdown-desc">保持持续的清洁</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="${rootPath}zh/service-areas/index.html">服务区域 <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="${rootPath}zh/service-areas/mosman.html" class="dropdown-item">
+                            <span class="dropdown-icon">📍</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Mosman</span>
+                                <span class="dropdown-desc">高端住宅区</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/service-areas/palm-beach.html" class="dropdown-item">
+                            <span class="dropdown-icon">🏖️</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Palm Beach</span>
+                                <span class="dropdown-desc">美丽的海滩区域</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/service-areas/bondi-beach.html" class="dropdown-item">
+                            <span class="dropdown-icon">🌊</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Bondi Beach</span>
+                                <span class="dropdown-desc">世界著名的海滩</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/service-areas/manly.html" class="dropdown-item">
+                            <span class="dropdown-icon">⛵</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Manly</span>
+                                <span class="dropdown-desc">热门旅游区域</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="${rootPath}zh/about/features.html">特点 <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="${rootPath}zh/about/features.html" class="dropdown-item">
+                            <span class="dropdown-icon">⭐</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">我们的优势</span>
+                                <span class="dropdown-desc">被选择的理由</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/tools/index.html" class="dropdown-item">
+                            <span class="dropdown-icon">🧽</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">使用工具</span>
+                                <span class="dropdown-desc">高品质的日本产品</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/about/cleaning-process.html" class="dropdown-item">
+                            <span class="dropdown-icon">📋</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">清洁流程</span>
+                                <span class="dropdown-desc">使用流程</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/about/FAQ.html" class="dropdown-item">
+                            <span class="dropdown-icon">❓</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">常见问题</span>
+                                <span class="dropdown-desc">常见问题</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li><a href="${rootPath}zh/Home.html#gallery">施工实绩</a></li>
+                <li class="dropdown">
+                    <a href="#" class="no-link">其他 <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="${rootPath}zh/blog/index.html" class="dropdown-item">
+                            <span class="dropdown-icon">📝</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">博客</span>
+                                <span class="dropdown-desc">清洁技巧和信息</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/about/recruit.html" class="dropdown-item">
+                            <span class="dropdown-icon">💼</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">招聘信息</span>
+                                <span class="dropdown-desc">一起工作吧</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/Home.html#testimonials" class="dropdown-item">
+                            <span class="dropdown-icon">💬</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">客户评价</span>
+                                <span class="dropdown-desc">实际评价和感想</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li><a href="${rootPath}zh/contact/index.html" class="cta-link">免费报价</a></li>
+                <li class="dropdown language-dropdown">
+                    <a href="#" class="no-link">🌐 中文 <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu language-menu">
+                        <a href="${rootPath}ja/Home.html" class="dropdown-item">
+                            <span class="dropdown-icon">🇯🇵</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">日本語</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}en/Home.html" class="dropdown-item">
+                            <span class="dropdown-icon">🇦🇺</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">English</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}zh/Home.html" class="dropdown-item active">
+                            <span class="dropdown-icon">🇨🇳</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">中文</span>
+                            </div>
+                        </a>
                     </div>
                 </li>
             </ul>
@@ -260,14 +458,22 @@ function initSharedHeader() {
     
     // 現在のページのパスから言語を判定
     const currentPath = window.location.pathname;
-    const isJapanese = currentPath.includes('/ja/') || 
-                       (!currentPath.includes('/en/') && currentPath !== '/en');
-    
-    // ルートパスを計算
+    let headerHTML;
     const rootPath = getRootPath();
     
-    // ヘッダーHTMLを生成
-    const headerHTML = isJapanese ? getJapaneseHeader(rootPath) : getEnglishHeader(rootPath);
+    if (currentPath.includes('/zh/')) {
+        // 中国語ページ
+        headerHTML = getChineseHeader(rootPath);
+    } else if (currentPath.includes('/ja/')) {
+        // 日本語ページ
+        headerHTML = getJapaneseHeader(rootPath);
+    } else if (currentPath.includes('/en/')) {
+        // 英語ページ
+        headerHTML = getEnglishHeader(rootPath);
+    } else {
+        // デフォルトは日本語
+        headerHTML = getJapaneseHeader(rootPath);
+    }
     
     // ヘッダーを挿入
     headerElement.innerHTML = headerHTML;
