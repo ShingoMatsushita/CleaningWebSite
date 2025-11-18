@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用道具 | Asahi Cleaning Sydney</title>
+    <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+        <!-- ヘッダー（自動生成） -->
+    <header id="header"></header>
+
+    <section class="hero" style="margin-top: 70px; padding: 5rem 5%; background: linear-gradient(135deg, #0080cc, #4da6ff); color: white; text-align: center; min-height: 400px; display: flex; align-items: center; justify-content: center;">
+        <div>
+            <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem;">使用道具</h1>
+            <p style="font-size: 1.3rem; opacity: 0.95;">日本の高品質な洗剤と清掃用具を使用しています</p>
+        </div>
+    </section>
+
+    <section class="tools" style="padding: 5rem 5%; background: white;">
+        <div style="max-width: 1400px; margin: 0 auto;">
+            <div class="section-header animate-on-scroll">
+                <h2>使用している道具</h2>
+                <p>厳格な品質基準をクリアした日本の製品のみを使用</p>
+            </div>
+            <div class="tools-container">
+                <button class="tools-arrow prev" onclick="scrollTools('prev')">‹</button>
+                <button class="tools-arrow next" onclick="scrollTools('next')">›</button>
+                <div class="tools-wrapper">
+                    <div class="tools-grid" id="toolsGrid">
+                        <div class="tool-card animate-on-scroll">
+                            <div class="tool-image">
+                                <img src="../../img/neutral-detergent.png" alt="日本の洗剤" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="tool-placeholder" style="display: none; width: 100%; height: 200px; background: linear-gradient(135deg, #e6f2ff, #cce7ff); border-radius: 15px; align-items: center; justify-content: center; font-size: 3rem;">🧴</div>
+                            </div>
+                            <h3>日本の洗剤</h3>
+                            <p>環境に優しく、効果的な日本の洗剤を使用。厳格な品質基準をクリアした製品のみを使用しています。お客様とご家族、ペットにも安全です。</p>
+                        </div>
+                        <div class="tool-card animate-on-scroll">
+                            <div class="tool-image">
+                                <img src="../../img/chamois-cloth.png" alt="日本製清掃用具" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="tool-placeholder" style="display: none; width: 100%; height: 200px; background: linear-gradient(135deg, #e6f2ff, #cce7ff); border-radius: 15px; align-items: center; justify-content: center; font-size: 3rem;">🧽</div>
+                            </div>
+                            <h3>日本製清掃用具</h3>
+                            <p>高品質な日本製の清掃用具を使用。細部まで丁寧に清掃できる、プロフェッショナルグレードの道具です。耐久性も高く、長く使用できます。</p>
+                        </div>
+                        <div class="tool-card animate-on-scroll">
+                            <div class="tool-image">
+                                <img src="../../img/hand-mop.png" alt="環境に優しい製品" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="tool-placeholder" style="display: none; width: 100%; height: 200px; background: linear-gradient(135deg, #e6f2ff, #cce7ff); border-radius: 15px; align-items: center; justify-content: center; font-size: 3rem;">🌿</div>
+                            </div>
+                            <h3>ハンドモップ</h3>
+                            <p>床の清掃に使用するハンドモップ。細かい部分まで丁寧に清掃できます。環境に優しい素材を使用しています。</p>
+                        </div>
+                        <div class="tool-card animate-on-scroll">
+                            <div class="tool-image">
+                                <img src="../../img/microfiber.png" alt="マイクロファイバー" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="tool-placeholder" style="display: none; width: 100%; height: 200px; background: linear-gradient(135deg, #e6f2ff, #cce7ff); border-radius: 15px; align-items: center; justify-content: center; font-size: 3rem;">🌿</div>
+                            </div>
+                            <h3>マイクロファイバークロス</h3>
+                            <p>極細繊維のマイクロファイバークロスで、傷をつけずに汚れを除去。水だけでも高い清掃効果を発揮します。化学薬品の使用を最小限に抑えます。</p>
+                        </div>
+                        <div class="tool-card animate-on-scroll">
+                            <div class="tool-image">
+                                <img src="../../img/gap-brush.png" alt="専用ブラシ" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="tool-placeholder" style="display: none; width: 100%; height: 200px; background: linear-gradient(135deg, #e6f2ff, #cce7ff); border-radius: 15px; align-items: center; justify-content: center; font-size: 3rem;">🌿</div>
+                            </div>
+                            <h3>専用ブラシ</h3>
+                            <p>隙間や細かい部分用の専用ブラシ。手の届きにくい場所も徹底的に清掃します。様々なサイズと形状のブラシを用意しています。</p>
+                        </div>
+                        <div class="tool-card animate-on-scroll">
+                            <div class="tool-image">
+                                <img src="../../img/curing-tape.png" alt="養生用品" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="tool-placeholder" style="display: none; width: 100%; height: 200px; background: linear-gradient(135deg, #e6f2ff, #cce7ff); border-radius: 15px; align-items: center; justify-content: center; font-size: 3rem;">🌿</div>
+                            </div>
+                            <h3>養生用品</h3>
+                            <p>作業中の保護用品。家具や床を傷つけないよう、丁寧に養生してから作業を行います。お客様の大切な財産を守ります。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="padding: 5rem 5%; background: var(--light-gray);">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div class="section-header animate-on-scroll">
+                <h2>なぜ日本の道具を使うのか</h2>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                <div class="feature-item animate-on-scroll">
+                    <div class="feature-icon">✅</div>
+                    <div class="feature-content">
+                        <h4>厳格な品質基準</h4>
+                        <p>日本の厳格な品質基準をクリアした製品のみを使用。安全性と効果性を両立します。</p>
+                    </div>
+                </div>
+                <div class="feature-item animate-on-scroll">
+                    <div class="feature-icon">🌿</div>
+                    <div class="feature-content">
+                        <h4>環境に優しい</h4>
+                        <p>環境に優しい製品を厳選。お客様とご家族、ペットにも安全です。</p>
+                    </div>
+                </div>
+                <div class="feature-item animate-on-scroll">
+                    <div class="feature-icon">⭐</div>
+                    <div class="feature-content">
+                        <h4>高い効果</h4>
+                        <p>日本の技術で開発された製品は、高い清掃効果を発揮します。</p>
+                    </div>
+                </div>
+                <div class="feature-item animate-on-scroll">
+                    <div class="feature-icon">🔒</div>
+                    <div class="feature-content">
+                        <h4>安全性</h4>
+                        <p>お客様の大切な財産を守るため、安全性を最優先に考えています。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta" id="contact">
+        <div class="cta-content animate-on-scroll">
+            <h2>使用道具について</h2>
+            <p>ご質問がございましたら、お気軽にお問い合わせください</p>
+            <div class="cta-buttons">
+                <a href="tel:0434683205" class="cta-btn"><span>📞</span><span>今すぐ電話する</span></a>
+                <a href="mailto:shenwusongxia48@gmail.com" class="cta-btn"><span>✉️</span><span>メールで問い合わせ</span></a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section"><h3>Asahi Cleaning Sydney</h3><p>日本の心で極上の清潔を。<br>シドニーで唯一の日本品質清掃サービス。</p></div>
+            <div class="footer-section"><h3>サービス</h3><ul><li><a href="../services/airbnb-cleaning.html">Airbnb清掃</a></li><li><a href="../services/luxury-residential-cleaning.html">高級住宅清掃</a></li><li><a href="../services/office-cleaning.html">オフィス清掃</a></li><li><a href="../services/deep-cleaning.html">ディープクリーニング</a></li></ul></div>
+            <div class="footer-section"><h3>会社情報</h3><ul><li><a href="../about/features.html">特徴</a></li><li><a href="../about/cleaning-process.html">クリーニングプロセス</a></li><li><a href="../about/FAQ.html">FAQ</a></li></ul></div>
+            <div class="footer-section"><h3>お問い合わせ</h3><p>📍 16 Oaks Ave, Dee Why NSW 2099, Australia<br>📞 0400-000-000<br>✉️ info@asahicleaningsydney.com</p></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2025 Asahi Cleaning.</p></div>
+    </footer><script src="../../script.js"></script>
+</body>
+</html>
+
