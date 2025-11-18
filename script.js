@@ -4,7 +4,226 @@ document.addEventListener('DOMContentLoaded', function() {
     updateGalleryArrows();
     updateToolsArrows();
     updateBlogArrows();
+
+    // カーソルエフェクトの初期化
+    initCursorEffect();
+
+    // パララックス効果の初期化
+    initParallax();
+
+    // ヘッダースクロールエフェクトの初期化
+    initHeaderScroll();
+
+    // ドロップダウンメニューの初期化
+    initDropdownMenus();
+
+    // サービスチップの初期化
+    initServiceChips();
+
+    // 言語切替の初期化
+    initLanguageSwitchers();
 });
+
+// ヘッダースクロールエフェクト
+function initHeaderScroll() {
+    const header = document.getElementById('header');
+    let lastScrollY = 0;
+    let ticking = false;
+
+    function updateHeader() {
+        const scrollY = window.pageYOffset;
+
+        if (scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+
+        lastScrollY = scrollY;
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            window.requestAnimationFrame(updateHeader);
+            ticking = true;
+        }
+    }, { passive: true });
+}
+
+// ドロップダウンメニュー機能
+function initDropdownMenus() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const link = dropdown.querySelector('a');
+        const menu = dropdown.querySelector('.dropdown-menu');
+        let isOpen = false;
+        let closeTimeout;
+
+        // モバイルでのタッチ対応
+        if ('ontouchstart' in window) {
+            link.addEventListener('click', function(e) {
+                // ドロップダウンがある場合のみ処理
+                if (menu) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // 他のドロップダウンを閉じる
+                    dropdowns.forEach(other => {
+                        if (other !== dropdown) {
+                            other.classList.remove('active');
+                        }
+                    });
+
+                    // トグル
+                    isOpen = !isOpen;
+                    dropdown.classList.toggle('active', isOpen);
+                }
+            });
+        }
+
+        // デスクトップでのマウス対応
+        dropdown.addEventListener('mouseenter', function() {
+            clearTimeout(closeTimeout);
+            dropdown.classList.add('active');
+        });
+
+        dropdown.addEventListener('mouseleave', function() {
+            closeTimeout = setTimeout(() => {
+                dropdown.classList.remove('active');
+            }, 200);
+        });
+    });
+
+    // 外側クリックで閉じる
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+}
+
+// サービスチップ（ショートカット）機能
+function initServiceChips() {
+    const groups = document.querySelectorAll('.choice-chips');
+
+    groups.forEach(group => {
+        const targetId = group.dataset.target;
+        const target = targetId ? document.getElementById(targetId) : null;
+        const buttons = Array.from(group.querySelectorAll('button[data-value]'));
+
+        if (!buttons.length) return;
+
+        const setActive = (value) => {
+            buttons.forEach(btn => {
+                btn.classList.toggle('active', value && btn.dataset.value === value);
+            });
+        };
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const value = button.dataset.value;
+                if (target) {
+                    target.value = value;
+                    target.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+                setActive(value);
+            });
+        });
+
+        if (target) {
+            target.addEventListener('change', () => setActive(target.value));
+            setActive(target.value);
+        }
+    });
+}
+
+// 言語切替 (グローブ) メニュー
+function initLanguageSwitchers() {
+    const switchers = document.querySelectorAll('.language-switcher');
+
+    if (!switchers.length) return;
+
+    switchers.forEach(switcher => {
+        const toggle = switcher.querySelector('.lang-toggle');
+        if (!toggle) return;
+
+        toggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isOpen = switcher.classList.toggle('open');
+            toggle.setAttribute('aria-expanded', isOpen);
+        });
+    });
+
+    document.addEventListener('click', function(e) {
+        switchers.forEach(switcher => {
+            if (!switcher.contains(e.target)) {
+                switcher.classList.remove('open');
+                const toggle = switcher.querySelector('.lang-toggle');
+                if (toggle) {
+                    toggle.setAttribute('aria-expanded', 'false');
+                }
+            }
+        });
+    });
+}
+
+// カーソル追従エフェクト
+function initCursorEffect() {
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let cursorX = mouseX;
+    let cursorY = mouseY;
+    const root = document.documentElement;
+
+    document.addEventListener('mousemove', function(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function animateCursor() {
+        cursorX += (mouseX - cursorX) * 0.1;
+        cursorY += (mouseY - cursorY) * 0.1;
+
+        root.style.setProperty('--cursor-x', cursorX + 'px');
+        root.style.setProperty('--cursor-y', cursorY + 'px');
+
+        requestAnimationFrame(animateCursor);
+    }
+
+    animateCursor();
+}
+
+// パララックス効果 - 最適化版
+function initParallax() {
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+
+    let ticking = false;
+    let lastScrollY = 0;
+
+    function updateParallax() {
+        const scrolled = lastScrollY;
+        const parallax = scrolled * 0.3; // 効果を軽減
+
+        if (scrolled < hero.offsetHeight) {
+            hero.style.transform = `translateY(${parallax}px)`;
+        }
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+        lastScrollY = window.pageYOffset;
+
+        if (!ticking) {
+            window.requestAnimationFrame(updateParallax);
+            ticking = true;
+        }
+    }, { passive: true }); // passive オプションでパフォーマンス向上
+}
 
 // モバイルメニュー
 const menuToggle = document.getElementById('menuToggle');
@@ -298,40 +517,67 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-// スクロールアニメーション
+// スクロールアニメーション - より滑らかな実装
 function animateOnScroll() {
     const elements = document.querySelectorAll('.animate-on-scroll');
-    
-    elements.forEach(element => {
+
+    elements.forEach((element, index) => {
         const elementTop = element.getBoundingClientRect().top;
         const elementBottom = element.getBoundingClientRect().bottom;
-        
+
         if (elementTop < window.innerHeight - 100 && elementBottom > 0) {
-            element.classList.add('visible');
+            // スタガー効果のための遅延を追加
+            setTimeout(() => {
+                element.classList.add('visible');
+            }, index * 50);
         }
     });
 }
 
-window.addEventListener('scroll', animateOnScroll);
+// スクロール時のパフォーマンス最適化
+let scrollTimeout;
+window.addEventListener('scroll', function() {
+    if (scrollTimeout) {
+        window.cancelAnimationFrame(scrollTimeout);
+    }
+
+    scrollTimeout = window.requestAnimationFrame(function() {
+        animateOnScroll();
+    });
+});
+
 window.addEventListener('load', animateOnScroll);
 
-// ヘッダーのスクロール効果
+// ヘッダーのスクロール効果 - 最適化版
 let lastScroll = 0;
 const header = document.getElementById('header');
+let headerTicking = false;
+
+function updateHeader() {
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll > 100) {
+        header.style.background = 'rgba(255, 255, 255, 0.95)';
+        header.style.backdropFilter = 'blur(20px) saturate(180%)';
+        header.style.boxShadow = '0 8px 32px rgba(0, 128, 204, 0.12)';
+        header.style.borderBottom = '1px solid rgba(0, 128, 204, 0.2)';
+    } else {
+        header.style.background = 'rgba(255, 255, 255, 0.85)';
+        header.style.backdropFilter = 'blur(20px) saturate(180%)';
+        header.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.08)';
+        header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.3)';
+    }
+
+    lastScroll = currentScroll;
+    headerTicking = false;
+}
 
 window.addEventListener('scroll', function() {
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll > 100) {
-        header.style.background = 'rgba(255, 255, 255, 0.98)';
-        header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
-    } else {
-        header.style.background = 'rgba(255, 255, 255, 0.98)';
-        header.style.boxShadow = '0 1px 10px rgba(0,0,0,0.05)';
+    if (!headerTicking) {
+        window.requestAnimationFrame(updateHeader);
+        headerTicking = true;
     }
-    
-    lastScroll = currentScroll;
-});
+}, { passive: true });
 
 // スムーズスクロール
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -350,7 +596,49 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// フォーム送信のシミュレーション
+// フォーム送信処理
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const currentLang = document.documentElement.lang || 'ja';
+        const submitBtn = this.querySelector('.submit-btn');
+        const originalText = submitBtn.innerHTML;
+
+        // ボタンを送信中の状態に変更
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = currentLang === 'ja' ?
+            '<span>送信中...</span>' :
+            '<span>Sending...</span>';
+
+        // フォームデータを取得
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            service: document.getElementById('service').value,
+            message: document.getElementById('message').value
+        };
+
+        // 実際の送信処理はここに実装
+        // 今はシミュレーションとして2秒後に成功メッセージを表示
+        setTimeout(() => {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+
+            // 成功メッセージを表示
+            alert(currentLang === 'ja' ?
+                `お問い合わせありがとうございます、${formData.name}様。\n24時間以内にご返信させていただきます。` :
+                `Thank you for your inquiry, ${formData.name}.\nWe will contact you within 24 hours.`);
+
+            // フォームをリセット
+            contactForm.reset();
+        }, 2000);
+    });
+}
+
+// フォーム送信のシミュレーション（既存のボタン用）
 const contactBtns = document.querySelectorAll('.btn-primary, .contact-btn, .cta-btn');
 contactBtns.forEach(btn => {
     if (btn.getAttribute('href') === '#contact' || btn.getAttribute('href') === '#') {
@@ -366,23 +654,63 @@ contactBtns.forEach(btn => {
     }
 });
 
-// パフォーマンス最適化: Intersection Observer
+// パフォーマンス最適化: Intersection Observer - より高度な実装
 const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
+    threshold: 0.15,
+    rootMargin: '0px 0px -80px 0px'
 };
 
 const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
+    entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
+            // スタガー効果のための遅延
+            setTimeout(() => {
+                entry.target.classList.add('visible');
+                // アニメーション完了後は監視を停止してパフォーマンス向上
+                observer.unobserve(entry.target);
+            }, index * 100);
         }
     });
 }, observerOptions);
 
-document.querySelectorAll('.animate-on-scroll').forEach(el => {
+// 各要素にアニメーションクラスとobserverを適用
+document.querySelectorAll('.animate-on-scroll').forEach((el, index) => {
+    // 初期状態を設定（CSSで設定済みなので削除）
     observer.observe(el);
 });
+
+// カードにホバー時の軽量な3D効果を追加（パフォーマンス最適化版）
+function add3DEffect() {
+    // モバイルデバイスでは3D効果をスキップ
+    if (window.innerWidth < 768) return;
+
+    const cards = document.querySelectorAll('.service-card, .area-card');
+
+    cards.forEach(card => {
+        card.addEventListener('mousemove', function(e) {
+            if (!this.matches(':hover')) return;
+
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = (y - centerY) / 20; // 効果を半減
+            const rotateY = (centerX - x) / 20; // 効果を半減
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-15px) scale(1.02)`;
+        });
+
+        card.addEventListener('mouseleave', function() {
+            card.style.transform = '';
+        });
+    });
+}
+
+// ページ読み込み後に3D効果を適用
+setTimeout(add3DEffect, 1000);
 
 // タッチスワイプ対応
 let touchStartX = 0;
