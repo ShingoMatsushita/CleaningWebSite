@@ -480,14 +480,14 @@ function initSharedHeader() {
 }
 
 // ============================================
-// ページ読み込み時の初期化
+// ページ読み込み時の初期化 - 最適化版
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
     // まずヘッダーを生成（他の初期化より先に実行）
     initSharedHeader();
     
-    // 少し遅延させてから他の初期化を実行（DOM更新を待つ）
-    setTimeout(() => {
+    // requestAnimationFrameを使用してDOM更新を待つ（setTimeoutの代わり）
+    requestAnimationFrame(() => {
         // モバイルメニューの初期化（header生成後）
         initMobileMenu();
         
@@ -516,13 +516,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 言語切替の初期化
         initLanguageSwitchers();
-    }, 0);
+    });
 });
 
-// ヘッダースクロールエフェクト
+// ヘッダースクロールエフェクト - 統合最適化版
 function initHeaderScroll() {
     const header = document.getElementById('header');
-    let lastScrollY = 0;
+    if (!header) return;
+    
     let ticking = false;
 
     function updateHeader() {
@@ -534,10 +535,10 @@ function initHeaderScroll() {
             header.classList.remove('scrolled');
         }
 
-        lastScrollY = scrollY;
         ticking = false;
     }
 
+    // 単一のスクロールイベントリスナーで統合
     window.addEventListener('scroll', function() {
         if (!ticking) {
             window.requestAnimationFrame(updateHeader);
@@ -666,30 +667,56 @@ function initLanguageSwitchers() {
     });
 }
 
-// カーソル追従エフェクト
+// カーソル追従エフェクト - 最適化版（モバイルでは無効化）
 function initCursorEffect() {
+    // モバイルデバイスでは無効化
+    if (window.innerWidth < 768 || 'ontouchstart' in window) {
+        return;
+    }
+
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
     let cursorX = mouseX;
     let cursorY = mouseY;
     const root = document.documentElement;
+    let animationFrameId = null;
+    let isActive = false;
 
-    document.addEventListener('mousemove', function(e) {
+    const handleMouseMove = function(e) {
         mouseX = e.clientX;
         mouseY = e.clientY;
-    });
+        
+        if (!isActive) {
+            isActive = true;
+            animateCursor();
+        }
+    };
 
     function animateCursor() {
+        if (!isActive) {
+            animationFrameId = null;
+            return;
+        }
+
         cursorX += (mouseX - cursorX) * 0.1;
         cursorY += (mouseY - cursorY) * 0.1;
 
         root.style.setProperty('--cursor-x', cursorX + 'px');
         root.style.setProperty('--cursor-y', cursorY + 'px');
 
-        requestAnimationFrame(animateCursor);
+        animationFrameId = requestAnimationFrame(animateCursor);
     }
 
-    animateCursor();
+    document.addEventListener('mousemove', handleMouseMove, { passive: true });
+    
+    // マウスが離れたらアニメーションを停止
+    document.addEventListener('mouseleave', function() {
+        isActive = false;
+        if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = null;
+        }
+    });
 }
 
 // パララックス効果 - 最適化版
@@ -848,6 +875,8 @@ const galleryData = [
 // ギャラリースクロール関数
 function scrollGallery(direction) {
     const gallery = document.getElementById('galleryGrid');
+    if (!gallery) return;
+    
     const scrollAmount = 370; // アイテム幅 + gap
     
     if (direction === 'prev') {
@@ -856,8 +885,8 @@ function scrollGallery(direction) {
         gallery.scrollLeft += scrollAmount;
     }
     
-    // スクロール後に矢印の表示を更新
-    setTimeout(updateGalleryArrows, 100);
+    // スクロール後に矢印の表示を更新（requestAnimationFrameで最適化）
+    requestAnimationFrame(updateGalleryArrows);
 }
 
 // ギャラリー矢印の表示/非表示を制御
@@ -888,6 +917,8 @@ function updateGalleryArrows() {
 // 使用道具のスクロール機能
 function scrollTools(direction) {
     const tools = document.getElementById('toolsGrid');
+    if (!tools) return;
+    
     const scrollAmount = 320; // アイテム幅 + gap
     
     if (direction === 'prev') {
@@ -896,8 +927,8 @@ function scrollTools(direction) {
         tools.scrollLeft += scrollAmount;
     }
     
-    // スクロール後に矢印の表示を更新
-    setTimeout(updateToolsArrows, 100);
+    // スクロール後に矢印の表示を更新（requestAnimationFrameで最適化）
+    requestAnimationFrame(updateToolsArrows);
 }
 
 // 使用道具矢印の表示/非表示を制御
@@ -931,6 +962,8 @@ function updateToolsArrows() {
 // ブログのスクロール機能
 function scrollBlog(direction) {
     const blog = document.getElementById('blogGrid');
+    if (!blog) return;
+    
     const scrollAmount = 370; // アイテム幅 + gap
     
     if (direction === 'prev') {
@@ -939,8 +972,8 @@ function scrollBlog(direction) {
         blog.scrollLeft += scrollAmount;
     }
     
-    // スクロール後に矢印の表示を更新
-    setTimeout(updateBlogArrows, 100);
+    // スクロール後に矢印の表示を更新（requestAnimationFrameで最適化）
+    requestAnimationFrame(updateBlogArrows);
 }
 
 // ブログ矢印の表示/非表示を制御
@@ -1028,67 +1061,9 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-// スクロールアニメーション - より滑らかな実装
-function animateOnScroll() {
-    const elements = document.querySelectorAll('.animate-on-scroll');
+// スクロールアニメーション - Intersection Observerで統合（削除：重複を避けるため）
 
-    elements.forEach((element, index) => {
-        const elementTop = element.getBoundingClientRect().top;
-        const elementBottom = element.getBoundingClientRect().bottom;
-
-        if (elementTop < window.innerHeight - 100 && elementBottom > 0) {
-            // スタガー効果のための遅延を追加
-            setTimeout(() => {
-                element.classList.add('visible');
-            }, index * 50);
-        }
-    });
-}
-
-// スクロール時のパフォーマンス最適化
-let scrollTimeout;
-window.addEventListener('scroll', function() {
-    if (scrollTimeout) {
-        window.cancelAnimationFrame(scrollTimeout);
-    }
-
-    scrollTimeout = window.requestAnimationFrame(function() {
-        animateOnScroll();
-    });
-});
-
-window.addEventListener('load', animateOnScroll);
-
-// ヘッダーのスクロール効果 - 最適化版
-let lastScroll = 0;
-const header = document.getElementById('header');
-let headerTicking = false;
-
-function updateHeader() {
-    const currentScroll = window.pageYOffset;
-
-    if (currentScroll > 100) {
-        header.style.background = 'rgba(255, 255, 255, 0.95)';
-        header.style.backdropFilter = 'blur(20px) saturate(180%)';
-        header.style.boxShadow = '0 8px 32px rgba(0, 128, 204, 0.12)';
-        header.style.borderBottom = '1px solid rgba(0, 128, 204, 0.2)';
-    } else {
-        header.style.background = 'rgba(255, 255, 255, 0.85)';
-        header.style.backdropFilter = 'blur(20px) saturate(180%)';
-        header.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.08)';
-        header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.3)';
-    }
-
-    lastScroll = currentScroll;
-    headerTicking = false;
-}
-
-window.addEventListener('scroll', function() {
-    if (!headerTicking) {
-        window.requestAnimationFrame(updateHeader);
-        headerTicking = true;
-    }
-}, { passive: true });
+// ヘッダーのスクロール効果 - 統合版（initHeaderScrollと統合）
 
 // スムーズスクロール
 function initSmoothScroll() {
@@ -1169,29 +1144,40 @@ contactBtns.forEach(btn => {
     }
 });
 
-// パフォーマンス最適化: Intersection Observer - より高度な実装
-const observerOptions = {
-    threshold: 0.15,
-    rootMargin: '0px 0px -80px 0px'
-};
+// パフォーマンス最適化: Intersection Observer - 単一インスタンス化
+let scrollObserver = null;
 
-const observer = new IntersectionObserver(function(entries) {
-    entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-            // スタガー効果のための遅延
-            setTimeout(() => {
+function initScrollObserver() {
+    // 既に作成されている場合は再利用
+    if (scrollObserver) {
+        return scrollObserver;
+    }
+
+    const observerOptions = {
+        threshold: 0.15,
+        rootMargin: '0px 0px -80px 0px'
+    };
+
+    scrollObserver = new IntersectionObserver(function(entries) {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
                 // アニメーション完了後は監視を停止してパフォーマンス向上
-                observer.unobserve(entry.target);
-            }, index * 100);
-        }
-    });
-}, observerOptions);
+                scrollObserver.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
 
-// 各要素にアニメーションクラスとobserverを適用
-document.querySelectorAll('.animate-on-scroll').forEach((el, index) => {
-    // 初期状態を設定（CSSで設定済みなので削除）
-    observer.observe(el);
+    return scrollObserver;
+}
+
+// DOMContentLoaded時に初期化
+document.addEventListener('DOMContentLoaded', function() {
+    const observer = initScrollObserver();
+    // 各要素にアニメーションクラスとobserverを適用
+    document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+        observer.observe(el);
+    });
 });
 
 // カードにホバー時の軽量な3D効果を追加（パフォーマンス最適化版）

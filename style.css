@@ -517,7 +517,6 @@ nav {
     background-image: url('img/Mount Fuji and Cherry Blossoms.jpg');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
     overflow: hidden;
     border-radius: 45px;
     box-shadow: var(--lux-shadow);
