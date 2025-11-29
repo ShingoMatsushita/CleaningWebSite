@@ -550,6 +550,12 @@ function initHeaderScroll() {
 // ドロップダウンメニュー機能
 function initDropdownMenus() {
     const dropdowns = document.querySelectorAll('.dropdown');
+    const navLinks = document.getElementById('navLinks');
+
+    // モバイルメニューが開いているか、画面幅が768px以下かチェック
+    function isMobileMenuMode() {
+        return window.innerWidth <= 768 || (navLinks && navLinks.classList.contains('active'));
+    }
 
     dropdowns.forEach(dropdown => {
         const link = dropdown.querySelector('a');
@@ -557,44 +563,78 @@ function initDropdownMenus() {
         let isOpen = false;
         let closeTimeout;
 
-        // モバイルでのタッチ対応
-        if ('ontouchstart' in window) {
+        // クリック/タップでドロップダウンを開閉（すべてのデバイスで動作）
+        if (link) {
             link.addEventListener('click', function(e) {
                 // ドロップダウンがある場合のみ処理
                 if (menu) {
-                    e.preventDefault();
-                    e.stopPropagation();
+                    // モバイルメニューモードの場合は、クリックで開閉
+                    if (isMobileMenuMode()) {
+                        e.preventDefault();
+                        e.stopPropagation();
 
-                    // 他のドロップダウンを閉じる
-                    dropdowns.forEach(other => {
-                        if (other !== dropdown) {
-                            other.classList.remove('active');
-                        }
-                    });
+                        // 他のドロップダウンを閉じる
+                        dropdowns.forEach(other => {
+                            if (other !== dropdown) {
+                                other.classList.remove('active');
+                            }
+                        });
 
-                    // トグル
-                    isOpen = !isOpen;
-                    dropdown.classList.toggle('active', isOpen);
+                        // トグル
+                        isOpen = !isOpen;
+                        dropdown.classList.toggle('active', isOpen);
+                    } else if ('ontouchstart' in window) {
+                        // タッチデバイスでモバイルメニューが閉じている場合
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        // 他のドロップダウンを閉じる
+                        dropdowns.forEach(other => {
+                            if (other !== dropdown) {
+                                other.classList.remove('active');
+                            }
+                        });
+
+                        // トグル
+                        isOpen = !isOpen;
+                        dropdown.classList.toggle('active', isOpen);
+                    }
                 }
             });
         }
 
-        // デスクトップでのマウス対応
+        // デスクトップでのマウス対応（モバイルメニューが開いている時は無効化）
         dropdown.addEventListener('mouseenter', function() {
+            // モバイルメニューモードの場合はマウスホバーを無効化
+            if (isMobileMenuMode()) {
+                return;
+            }
             clearTimeout(closeTimeout);
+            
+            // 他のドロップダウンを即座に閉じる（UX向上）
+            dropdowns.forEach(other => {
+                if (other !== dropdown) {
+                    other.classList.remove('active');
+                }
+            });
+            
             dropdown.classList.add('active');
         });
 
         dropdown.addEventListener('mouseleave', function() {
+            // モバイルメニューモードの場合はマウスホバーを無効化
+            if (isMobileMenuMode()) {
+                return;
+            }
             closeTimeout = setTimeout(() => {
                 dropdown.classList.remove('active');
-            }, 200);
+            }, 1000);
         });
     });
 
-    // 外側クリックで閉じる
+    // 外側クリックで閉じる（モバイルメニューが開いている時のみ）
     document.addEventListener('click', function(e) {
-        if (!e.target.closest('.dropdown')) {
+        if (isMobileMenuMode() && !e.target.closest('.dropdown')) {
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
             });
@@ -758,16 +798,52 @@ function initMobileMenu() {
         menuToggle.parentNode.replaceChild(newMenuToggle, menuToggle);
         
         newMenuToggle.addEventListener('click', function() {
-            navLinks.classList.toggle('active');
+            const isActive = navLinks.classList.toggle('active');
             newMenuToggle.classList.toggle('active');
+            
+            // メニューが開いているときはbodyのスクロールを無効化
+            if (isActive) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
         });
         
-        // メニューリンクをクリックしたら閉じる
+        // メニューリンクをクリックしたら閉じる（ドロップダウンの親リンクは除く）
         navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
+            link.addEventListener('click', (e) => {
+                // ドロップダウンの親リンクの場合は、メニューを閉じない
+                const dropdown = link.closest('.dropdown');
+                if (dropdown && dropdown.querySelector('.dropdown-menu')) {
+                    // 親リンクのクリックは、ドロップダウンの開閉処理で処理される
+                    // ここでは何もしない
+                    return;
+                }
+                
+                // ドロップダウンメニュー内のリンク（子リンク）をクリックした場合は閉じる
+                const isDropdownItem = link.closest('.dropdown-menu');
+                if (isDropdownItem) {
+                    navLinks.classList.remove('active');
+                    newMenuToggle.classList.remove('active');
+                    document.body.style.overflow = '';
+                } else if (!dropdown) {
+                    // 通常のリンク（ドロップダウンではない）をクリックした場合は閉じる
+                    navLinks.classList.remove('active');
+                    newMenuToggle.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+        
+        // メニュー外側をクリックしたら閉じる
+        document.addEventListener('click', function(e) {
+            if (navLinks.classList.contains('active') && 
+                !navLinks.contains(e.target) && 
+                !newMenuToggle.contains(e.target)) {
                 navLinks.classList.remove('active');
                 newMenuToggle.classList.remove('active');
-            });
+                document.body.style.overflow = '';
+            }
         });
     }
 }
