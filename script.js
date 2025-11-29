@@ -1456,7 +1456,9 @@ function initMobileSubmenus() {
     });
 
     // 戻るボタンのクリックイベント
-    submenuBack.addEventListener('click', function() {
+    submenuBack.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
         submenuPanel.classList.remove('active');
     });
 
