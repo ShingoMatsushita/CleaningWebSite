@@ -190,18 +190,6 @@ function getJapaneseHeader(rootPath) {
                 </li>
             </ul>
 
-            <!-- モバイル専用: 2段階サブメニューパネル -->
-            <div class="mobile-submenu-panel" id="mobileSubmenuPanel">
-                <div class="submenu-header">
-                    <button class="submenu-back" id="submenuBack">
-                        <span class="back-arrow">←</span>
-                        <span>戻る</span>
-                    </button>
-                    <span class="submenu-title" id="submenuTitle">サービス</span>
-                </div>
-                <div class="submenu-content" id="submenuContent"></div>
-            </div>
-
             <div class="menu-toggle" id="menuToggle">
                 <span></span>
                 <span></span>
@@ -257,18 +245,6 @@ function getEnglishHeader(rootPath) {
                     </div>
                 </li>
             </ul>
-
-            <!-- Mobile Only: 2-Level Submenu Panel -->
-            <div class="mobile-submenu-panel" id="mobileSubmenuPanel">
-                <div class="submenu-header">
-                    <button class="submenu-back" id="submenuBack">
-                        <span class="back-arrow">←</span>
-                        <span>Back</span>
-                    </button>
-                    <span class="submenu-title" id="submenuTitle">Services</span>
-                </div>
-                <div class="submenu-content" id="submenuContent"></div>
-            </div>
 
             <div class="menu-toggle" id="menuToggle">
                 <span></span>
@@ -456,18 +432,6 @@ function getChineseHeader(rootPath) {
                     </div>
                 </li>
             </ul>
-
-            <!-- 移动端专用：二级子菜单面板 -->
-            <div class="mobile-submenu-panel" id="mobileSubmenuPanel">
-                <div class="submenu-header">
-                    <button class="submenu-back" id="submenuBack">
-                        <span class="back-arrow">←</span>
-                        <span>返回</span>
-                    </button>
-                    <span class="submenu-title" id="submenuTitle">服务</span>
-                </div>
-                <div class="submenu-content" id="submenuContent"></div>
-            </div>
 
             <div class="menu-toggle" id="menuToggle">
                 <span></span>
@@ -1413,20 +1377,12 @@ if (galleryGrid) {
 }
 
 // ============================================
-// モバイル専用: 2段階スライドインメニュー
+// モバイルメニュー: ドロップダウン展開機能
 // ============================================
-function initMobileSubmenus() {
+function initMobileDropdowns() {
     // モバイルのみで動作
     if (window.innerWidth > 768) return;
 
-    const submenuPanel = document.getElementById('mobileSubmenuPanel');
-    const submenuBack = document.getElementById('submenuBack');
-    const submenuTitle = document.getElementById('submenuTitle');
-    const submenuContent = document.getElementById('submenuContent');
-
-    if (!submenuPanel || !submenuBack || !submenuTitle || !submenuContent) return;
-
-    // 各ドロップダウンメニューのクリックイベント
     const dropdowns = document.querySelectorAll('.dropdown');
 
     dropdowns.forEach(dropdown => {
@@ -1443,30 +1399,25 @@ function initMobileSubmenus() {
             e.preventDefault();
             e.stopPropagation();
 
-            // サブメニューのタイトルを設定
-            const titleText = link.textContent.replace('▼', '').trim();
-            submenuTitle.textContent = titleText;
+            // 他のドロップダウンを閉じる
+            dropdowns.forEach(otherDropdown => {
+                if (otherDropdown !== dropdown) {
+                    otherDropdown.classList.remove('mobile-open');
+                }
+            });
 
-            // サブメニューの内容をコピー
-            submenuContent.innerHTML = menu.innerHTML;
-
-            // サブメニューパネルを表示
-            submenuPanel.classList.add('active');
+            // このドロップダウンをトグル
+            dropdown.classList.toggle('mobile-open');
         });
     });
 
-    // 戻るボタンのクリックイベント
-    submenuBack.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        submenuPanel.classList.remove('active');
-    });
-
-    // サブメニュー内のリンクをクリックしたら、両方のメニューを閉じる
-    submenuContent.addEventListener('click', function(e) {
+    // ドロップダウン内のリンクをクリックしたら、メニューを閉じる
+    document.addEventListener('click', function(e) {
         if (e.target.closest('.dropdown-item')) {
-            // サブメニューパネルを閉じる
-            submenuPanel.classList.remove('active');
+            // すべてのドロップダウンを閉じる
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('mobile-open');
+            });
 
             // メインメニューも閉じる
             const navLinks = document.getElementById('navLinks');
@@ -1478,17 +1429,7 @@ function initMobileSubmenus() {
     });
 }
 
-// ページ読み込み時とリサイズ時に初期化
+// ページ読み込み時に初期化
 window.addEventListener('load', function() {
-    initMobileSubmenus();
-});
-
-window.addEventListener('resize', function() {
-    // デスクトップに切り替わった時はサブメニューパネルを閉じる
-    if (window.innerWidth > 768) {
-        const submenuPanel = document.getElementById('mobileSubmenuPanel');
-        if (submenuPanel) {
-            submenuPanel.classList.remove('active');
-        }
-    }
+    initMobileDropdowns();
 });
