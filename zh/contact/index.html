@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系我们 | Asahi Cleaning Sydney</title>
+    <meta name="description" content="联系Asahi Cleaning Sydney获取专业的日本品质清洁服务。提供免费报价。电话：0434-683-205">
+    <link rel="stylesheet" href="../../style.css">
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            // 初始化EmailJS（仅当配置了公钥时）
+            const publicKey = 'YOUR_PUBLIC_KEY'; // 设置与script.js中EMAILJS_CONFIG相同的值
+            if (publicKey !== 'YOUR_PUBLIC_KEY') {
+                emailjs.init(publicKey);
+            }
+        })();
+    </script>
+</head>
+<body>
+    <!-- 页眉（自动生成） -->
+    <header id="header"></header>
+
+    <section class="hero" style="margin-top: 70px; padding: 5rem 5%; background: linear-gradient(135deg, #0080cc, #4da6ff); color: white; text-align: center; min-height: 400px; display: flex; align-items: center; justify-content: center;">
+        <div>
+            <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem;">联系我们</h1>
+            <p style="font-size: 1.3rem; opacity: 0.95;">请随时联系我们。提供免费报价</p>
+        </div>
+    </section>
+
+    <section style="padding: 5rem 5%; background: white;">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <div class="section-header animate-on-scroll">
+                <h2>联系方式</h2>
+                <p>可通过电话、电子邮件或在线表单联系我们</p>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                <div class="service-card animate-on-scroll" style="text-align: center;">
+                    <div class="service-icon" style="font-size: 3rem;">📞</div>
+                    <h3>电话</h3>
+                    <p style="font-size: 1.5rem; color: var(--accent-color); font-weight: 700; margin: 1rem 0;">0434-683-205</p>
+                    <p style="color: var(--text-gray);">营业时间：周一至周六 8:00-18:00</p>
+                    <a href="tel:0434683205" class="btn-primary" style="margin-top: 1rem; display: inline-block;">立即致电</a>
+                </div>
+                <div class="service-card animate-on-scroll" style="text-align: center;">
+                    <div class="service-icon" style="font-size: 3rem;">✉️</div>
+                    <h3>电子邮件</h3>
+                    <p style="font-size: 1.2rem; color: var(--accent-color); font-weight: 700; margin: 1rem 0;">shenwusongxia48@gmail.com</p>
+                    <p style="color: var(--text-gray);">全天候受理</p>
+                    <a href="mailto:shenwusongxia48@gmail.com" class="btn-primary" style="margin-top: 1rem; display: inline-block;">发送邮件</a>
+                </div>
+                <div class="service-card animate-on-scroll" style="text-align: center;">
+                    <div class="service-icon" style="font-size: 3rem;">📍</div>
+                    <h3>地址</h3>
+                    <p style="color: var(--text-gray); line-height: 1.8; margin: 1rem 0;">16 Oaks Ave, Dee Why<br>NSW 2099, Australia</p>
+                    <p style="color: var(--text-gray); font-size: 0.9rem;">可提供现场查勘</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="padding: 5rem 5%; background: var(--light-gray);">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <div class="section-header animate-on-scroll">
+                <h2>联系表单</h2>
+                <p>您也可以通过此表单联系我们</p>
+            </div>
+            <div style="background: white; padding: 3rem; border-radius: 15px; margin-top: 3rem; box-shadow: var(--shadow);">
+                <form id="contactForm" style="display: grid; gap: 1.5rem;">
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">姓名 <span style="color: red;">*</span></label>
+                        <input type="text" id="name" name="name" required style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">电子邮件地址 <span style="color: red;">*</span></label>
+                        <input type="email" id="email" name="email" required style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">电话号码</label>
+                        <input type="tel" id="phone" name="phone" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">服务类型 <span style="color: red;">*</span></label>
+                        <select id="service" name="service" required style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
+                            <option value="">请选择</option>
+                            <option value="airbnb">Airbnb清洁</option>
+                            <option value="luxury">高端住宅清洁</option>
+                            <option value="office">办公室清洁</option>
+                            <option value="deep">深度清洁</option>
+                            <option value="japanese">日式空间装饰</option>
+                            <option value="regular">定期清洁计划</option>
+                            <option value="other">其他</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">留言 <span style="color: red;">*</span></label>
+                        <textarea id="message" name="message" required rows="5" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem; font-family: inherit;"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary submit-btn" style="width: 100%; padding: 1rem; font-size: 1.1rem; cursor: pointer;">发送</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section style="padding: 5rem 5%; background: white;">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <div class="section-header animate-on-scroll">
+                <h2>营业时间</h2>
+            </div>
+            <div style="background: var(--light-gray); padding: 3rem; border-radius: 15px; margin-top: 3rem; text-align: center;">
+                <p style="font-size: 1.3rem; line-height: 2; color: var(--text-gray);">
+                    <strong>周一至周六：</strong>上午8:00 - 下午6:00<br>
+                    <strong>周日及公共假期：</strong>休息<br><br>
+                    如有紧急需求，请致电咨询。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section"><h3>Asahi Cleaning Sydney</h3><p>以日本之心创造极致清洁。<br>悉尼唯一的日本品质清洁服务。</p></div>
+            <div class="footer-section"><h3>服务</h3><ul><li><a href="../services/airbnb-cleaning.html">Airbnb清洁</a></li><li><a href="../services/luxury-residential-cleaning.html">高端住宅清洁</a></li><li><a href="../services/office-cleaning.html">办公室清洁</a></li><li><a href="../services/deep-cleaning.html">深度清洁</a></li></ul></div>
+            <div class="footer-section"><h3>公司信息</h3><ul><li><a href="../about/features.html">特点</a></li><li><a href="../about/cleaning-process.html">清洁流程</a></li><li><a href="../about/FAQ.html">常见问题</a></li></ul></div>
+            <div class="footer-section"><h3>联系方式</h3><p>📍 16 Oaks Ave, Dee Why NSW 2099, Australia<br>📞 0434-683-205<br>✉️ shenwusongxia48@gmail.com</p></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2025 Asahi Cleaning Sydney. 保留所有权利。</p></div>
+    </footer>
+    <script src="../../script.js"></script>
+</body>
+</html>

@@ -189,6 +189,7 @@ function getJapaneseHeader(rootPath) {
                     </div>
                 </li>
             </ul>
+
             <div class="menu-toggle" id="menuToggle">
                 <span></span>
                 <span></span>
@@ -244,6 +245,7 @@ function getEnglishHeader(rootPath) {
                     </div>
                 </li>
             </ul>
+
             <div class="menu-toggle" id="menuToggle">
                 <span></span>
                 <span></span>
@@ -430,6 +432,7 @@ function getChineseHeader(rootPath) {
                     </div>
                 </li>
             </ul>
+
             <div class="menu-toggle" id="menuToggle">
                 <span></span>
                 <span></span>
@@ -550,6 +553,12 @@ function initHeaderScroll() {
 // ドロップダウンメニュー機能
 function initDropdownMenus() {
     const dropdowns = document.querySelectorAll('.dropdown');
+    const navLinks = document.getElementById('navLinks');
+
+    // モバイルメニューが開いているか、画面幅が768px以下かチェック
+    function isMobileMenuMode() {
+        return window.innerWidth <= 768 || (navLinks && navLinks.classList.contains('active'));
+    }
 
     dropdowns.forEach(dropdown => {
         const link = dropdown.querySelector('a');
@@ -557,44 +566,78 @@ function initDropdownMenus() {
         let isOpen = false;
         let closeTimeout;
 
-        // モバイルでのタッチ対応
-        if ('ontouchstart' in window) {
+        // クリック/タップでドロップダウンを開閉（すべてのデバイスで動作）
+        if (link) {
             link.addEventListener('click', function(e) {
                 // ドロップダウンがある場合のみ処理
                 if (menu) {
-                    e.preventDefault();
-                    e.stopPropagation();
+                    // モバイルメニューモードの場合は、クリックで開閉
+                    if (isMobileMenuMode()) {
+                        e.preventDefault();
+                        e.stopPropagation();
 
-                    // 他のドロップダウンを閉じる
-                    dropdowns.forEach(other => {
-                        if (other !== dropdown) {
-                            other.classList.remove('active');
-                        }
-                    });
+                        // 他のドロップダウンを閉じる
+                        dropdowns.forEach(other => {
+                            if (other !== dropdown) {
+                                other.classList.remove('active');
+                            }
+                        });
 
-                    // トグル
-                    isOpen = !isOpen;
-                    dropdown.classList.toggle('active', isOpen);
+                        // トグル
+                        isOpen = !isOpen;
+                        dropdown.classList.toggle('active', isOpen);
+                    } else if ('ontouchstart' in window) {
+                        // タッチデバイスでモバイルメニューが閉じている場合
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        // 他のドロップダウンを閉じる
+                        dropdowns.forEach(other => {
+                            if (other !== dropdown) {
+                                other.classList.remove('active');
+                            }
+                        });
+
+                        // トグル
+                        isOpen = !isOpen;
+                        dropdown.classList.toggle('active', isOpen);
+                    }
                 }
             });
         }
 
-        // デスクトップでのマウス対応
+        // デスクトップでのマウス対応（モバイルメニューが開いている時は無効化）
         dropdown.addEventListener('mouseenter', function() {
+            // モバイルメニューモードの場合はマウスホバーを無効化
+            if (isMobileMenuMode()) {
+                return;
+            }
             clearTimeout(closeTimeout);
+            
+            // 他のドロップダウンを即座に閉じる（UX向上）
+            dropdowns.forEach(other => {
+                if (other !== dropdown) {
+                    other.classList.remove('active');
+                }
+            });
+            
             dropdown.classList.add('active');
         });
 
         dropdown.addEventListener('mouseleave', function() {
+            // モバイルメニューモードの場合はマウスホバーを無効化
+            if (isMobileMenuMode()) {
+                return;
+            }
             closeTimeout = setTimeout(() => {
                 dropdown.classList.remove('active');
-            }, 200);
+            }, 1000);
         });
     });
 
-    // 外側クリックで閉じる
+    // 外側クリックで閉じる（モバイルメニューが開いている時のみ）
     document.addEventListener('click', function(e) {
-        if (!e.target.closest('.dropdown')) {
+        if (isMobileMenuMode() && !e.target.closest('.dropdown')) {
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('active');
             });
@@ -758,16 +801,52 @@ function initMobileMenu() {
         menuToggle.parentNode.replaceChild(newMenuToggle, menuToggle);
         
         newMenuToggle.addEventListener('click', function() {
-            navLinks.classList.toggle('active');
+            const isActive = navLinks.classList.toggle('active');
             newMenuToggle.classList.toggle('active');
+            
+            // メニューが開いているときはbodyのスクロールを無効化
+            if (isActive) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
         });
         
-        // メニューリンクをクリックしたら閉じる
+        // メニューリンクをクリックしたら閉じる（ドロップダウンの親リンクは除く）
         navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
+            link.addEventListener('click', (e) => {
+                // ドロップダウンの親リンクの場合は、メニューを閉じない
+                const dropdown = link.closest('.dropdown');
+                if (dropdown && dropdown.querySelector('.dropdown-menu')) {
+                    // 親リンクのクリックは、ドロップダウンの開閉処理で処理される
+                    // ここでは何もしない
+                    return;
+                }
+                
+                // ドロップダウンメニュー内のリンク（子リンク）をクリックした場合は閉じる
+                const isDropdownItem = link.closest('.dropdown-menu');
+                if (isDropdownItem) {
+                    navLinks.classList.remove('active');
+                    newMenuToggle.classList.remove('active');
+                    document.body.style.overflow = '';
+                } else if (!dropdown) {
+                    // 通常のリンク（ドロップダウンではない）をクリックした場合は閉じる
+                    navLinks.classList.remove('active');
+                    newMenuToggle.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+        
+        // メニュー外側をクリックしたら閉じる
+        document.addEventListener('click', function(e) {
+            if (navLinks.classList.contains('active') && 
+                !navLinks.contains(e.target) && 
+                !newMenuToggle.contains(e.target)) {
                 navLinks.classList.remove('active');
                 newMenuToggle.classList.remove('active');
-            });
+                document.body.style.overflow = '';
+            }
         });
     }
 }
@@ -1086,6 +1165,25 @@ function initSmoothScroll() {
     });
 }
 
+// ============================================
+// EmailJS設定 - フォーム送信機能
+// ============================================
+//
+// EmailJSの設定手順:
+// 1. https://www.emailjs.com/ でアカウントを作成（無料プランあり）
+// 2. Email Serviceを追加（Gmail、Outlook等）
+// 3. Email Templateを作成
+// 4. 以下の値を取得して設定:
+//    - YOUR_PUBLIC_KEY: Account > General > Public Key
+//    - YOUR_SERVICE_ID: Email Services > Service ID
+//    - YOUR_TEMPLATE_ID: Email Templates > Template ID
+//
+const EMAILJS_CONFIG = {
+    publicKey: 'YOUR_PUBLIC_KEY',      // ここに公開鍵を入力
+    serviceId: 'YOUR_SERVICE_ID',       // ここにサービスIDを入力
+    templateId: 'YOUR_TEMPLATE_ID'      // ここにテンプレートIDを入力
+};
+
 // フォーム送信処理
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
@@ -1098,33 +1196,73 @@ if (contactForm) {
 
         // ボタンを送信中の状態に変更
         submitBtn.disabled = true;
-        submitBtn.innerHTML = currentLang === 'ja' ?
-            '<span>送信中...</span>' :
-            '<span>Sending...</span>';
+        const sendingText = currentLang === 'ja' ? '送信中...' :
+                           currentLang === 'zh' ? '发送中...' : 'Sending...';
+        submitBtn.innerHTML = `<span>${sendingText}</span>`;
 
         // フォームデータを取得
         const formData = {
             name: document.getElementById('name').value,
             email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value,
+            phone: document.getElementById('phone').value || 'Not provided',
             service: document.getElementById('service').value,
-            message: document.getElementById('message').value
+            message: document.getElementById('message').value,
+            language: currentLang
         };
 
-        // 実際の送信処理はここに実装
-        // 今はシミュレーションとして2秒後に成功メッセージを表示
-        setTimeout(() => {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalText;
+        // EmailJSで送信（設定済みの場合）
+        if (typeof emailjs !== 'undefined' &&
+            EMAILJS_CONFIG.publicKey !== 'YOUR_PUBLIC_KEY') {
 
-            // 成功メッセージを表示
-            alert(currentLang === 'ja' ?
-                `お問い合わせありがとうございます、${formData.name}様。\n24時間以内にご返信させていただきます。` :
-                `Thank you for your inquiry, ${formData.name}.\nWe will contact you within 24 hours.`);
+            emailjs.send(
+                EMAILJS_CONFIG.serviceId,
+                EMAILJS_CONFIG.templateId,
+                formData
+            ).then(function(response) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
 
-            // フォームをリセット
-            contactForm.reset();
-        }, 2000);
+                // 成功メッセージ
+                const successMsg = currentLang === 'ja' ?
+                    `お問い合わせありがとうございます、${formData.name}様。\n24時間以内にご返信させていただきます。` :
+                    currentLang === 'zh' ?
+                    `感谢您的咨询，${formData.name}。\n我们将在24小时内回复您。` :
+                    `Thank you for your inquiry, ${formData.name}.\nWe will contact you within 24 hours.`;
+
+                alert(successMsg);
+                contactForm.reset();
+
+            }).catch(function(error) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+
+                // エラーメッセージ
+                const errorMsg = currentLang === 'ja' ?
+                    '送信に失敗しました。お手数ですが、お電話またはメールで直接ご連絡ください。' :
+                    currentLang === 'zh' ?
+                    '发送失败。请通过电话或电子邮件直接联系我们。' :
+                    'Failed to send. Please contact us directly by phone or email.';
+
+                alert(errorMsg);
+                console.error('EmailJS Error:', error);
+            });
+
+        } else {
+            // EmailJSが未設定の場合はシミュレーション
+            setTimeout(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+
+                const msg = currentLang === 'ja' ?
+                    `お問い合わせありがとうございます、${formData.name}様。\n※現在テストモードです。メール送信を有効化するにはEmailJSを設定してください。` :
+                    currentLang === 'zh' ?
+                    `感谢您的咨询，${formData.name}。\n※目前为测试模式。要启用电子邮件发送，请配置EmailJS。` :
+                    `Thank you for your inquiry, ${formData.name}.\n※Currently in test mode. Please configure EmailJS to enable email sending.`;
+
+                alert(msg);
+                contactForm.reset();
+            }, 1000);
+        }
     });
 }
 
@@ -1237,3 +1375,61 @@ if (galleryGrid) {
         }
     }
 }
+
+// ============================================
+// モバイルメニュー: ドロップダウン展開機能
+// ============================================
+function initMobileDropdowns() {
+    // モバイルのみで動作
+    if (window.innerWidth > 768) return;
+
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const link = dropdown.querySelector('a');
+        const menu = dropdown.querySelector('.dropdown-menu');
+
+        if (!link || !menu) return;
+
+        link.addEventListener('click', function(e) {
+            // モバイルメニューが開いている場合のみ処理
+            const navLinks = document.getElementById('navLinks');
+            if (!navLinks || !navLinks.classList.contains('active')) return;
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            // 他のドロップダウンを閉じる
+            dropdowns.forEach(otherDropdown => {
+                if (otherDropdown !== dropdown) {
+                    otherDropdown.classList.remove('mobile-open');
+                }
+            });
+
+            // このドロップダウンをトグル
+            dropdown.classList.toggle('mobile-open');
+        });
+    });
+
+    // ドロップダウン内のリンクをクリックしたら、メニューを閉じる
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.dropdown-item')) {
+            // すべてのドロップダウンを閉じる
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('mobile-open');
+            });
+
+            // メインメニューも閉じる
+            const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.getElementById('menuToggle');
+            if (navLinks) navLinks.classList.remove('active');
+            if (menuToggle) menuToggle.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+}
+
+// ページ読み込み時に初期化
+window.addEventListener('load', function() {
+    initMobileDropdowns();
+});
