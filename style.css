@@ -246,6 +246,18 @@ nav {
     position: relative;
 }
 
+/* ホバー範囲を拡張してメニュー領域をカバー */
+.dropdown::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 2rem;
+    background: transparent;
+    pointer-events: none;
+}
+
 .dropdown > a {
     cursor: pointer;
 }
