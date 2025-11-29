@@ -263,7 +263,7 @@ nav {
 
 .dropdown-menu {
     position: absolute;
-    top: calc(100% + 1rem);
+    top: calc(100% + 0.3rem);
     left: 50%;
     transform: translateX(-50%);
     background: rgba(255, 255, 255, 0.98);
@@ -322,6 +322,17 @@ nav {
     border-radius: 2px;
     rotate: 45deg;
     box-shadow: -2px -2px 5px rgba(0, 128, 204, 0.05);
+}
+
+/* 見えない橋でホバー範囲を拡張 */
+.dropdown-menu::after {
+    content: '';
+    position: absolute;
+    top: -0.5rem;
+    left: 0;
+    right: 0;
+    height: 0.5rem;
+    background: transparent;
 }
 
 .dropdown:hover .dropdown-menu,
