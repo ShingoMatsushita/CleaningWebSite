@@ -6,6 +6,17 @@
     <title>联系我们 | Asahi Cleaning Sydney</title>
     <meta name="description" content="联系Asahi Cleaning Sydney获取专业的日本品质清洁服务。提供免费报价。电话：0434-683-205">
     <link rel="stylesheet" href="../../style.css">
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            // 初始化EmailJS（仅当配置了公钥时）
+            const publicKey = 'YOUR_PUBLIC_KEY'; // 设置与script.js中EMAILJS_CONFIG相同的值
+            if (publicKey !== 'YOUR_PUBLIC_KEY') {
+                emailjs.init(publicKey);
+            }
+        })();
+    </script>
 </head>
 <body>
     <!-- 页眉（自动生成） -->

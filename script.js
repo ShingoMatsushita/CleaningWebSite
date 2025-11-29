@@ -1162,6 +1162,25 @@ function initSmoothScroll() {
     });
 }
 
+// ============================================
+// EmailJS設定 - フォーム送信機能
+// ============================================
+//
+// EmailJSの設定手順:
+// 1. https://www.emailjs.com/ でアカウントを作成（無料プランあり）
+// 2. Email Serviceを追加（Gmail、Outlook等）
+// 3. Email Templateを作成
+// 4. 以下の値を取得して設定:
+//    - YOUR_PUBLIC_KEY: Account > General > Public Key
+//    - YOUR_SERVICE_ID: Email Services > Service ID
+//    - YOUR_TEMPLATE_ID: Email Templates > Template ID
+//
+const EMAILJS_CONFIG = {
+    publicKey: 'YOUR_PUBLIC_KEY',      // ここに公開鍵を入力
+    serviceId: 'YOUR_SERVICE_ID',       // ここにサービスIDを入力
+    templateId: 'YOUR_TEMPLATE_ID'      // ここにテンプレートIDを入力
+};
+
 // フォーム送信処理
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
@@ -1174,33 +1193,73 @@ if (contactForm) {
 
         // ボタンを送信中の状態に変更
         submitBtn.disabled = true;
-        submitBtn.innerHTML = currentLang === 'ja' ?
-            '<span>送信中...</span>' :
-            '<span>Sending...</span>';
+        const sendingText = currentLang === 'ja' ? '送信中...' :
+                           currentLang === 'zh' ? '发送中...' : 'Sending...';
+        submitBtn.innerHTML = `<span>${sendingText}</span>`;
 
         // フォームデータを取得
         const formData = {
             name: document.getElementById('name').value,
             email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value,
+            phone: document.getElementById('phone').value || 'Not provided',
             service: document.getElementById('service').value,
-            message: document.getElementById('message').value
+            message: document.getElementById('message').value,
+            language: currentLang
         };
 
-        // 実際の送信処理はここに実装
-        // 今はシミュレーションとして2秒後に成功メッセージを表示
-        setTimeout(() => {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalText;
+        // EmailJSで送信（設定済みの場合）
+        if (typeof emailjs !== 'undefined' &&
+            EMAILJS_CONFIG.publicKey !== 'YOUR_PUBLIC_KEY') {
 
-            // 成功メッセージを表示
-            alert(currentLang === 'ja' ?
-                `お問い合わせありがとうございます、${formData.name}様。\n24時間以内にご返信させていただきます。` :
-                `Thank you for your inquiry, ${formData.name}.\nWe will contact you within 24 hours.`);
+            emailjs.send(
+                EMAILJS_CONFIG.serviceId,
+                EMAILJS_CONFIG.templateId,
+                formData
+            ).then(function(response) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
 
-            // フォームをリセット
-            contactForm.reset();
-        }, 2000);
+                // 成功メッセージ
+                const successMsg = currentLang === 'ja' ?
+                    `お問い合わせありがとうございます、${formData.name}様。\n24時間以内にご返信させていただきます。` :
+                    currentLang === 'zh' ?
+                    `感谢您的咨询，${formData.name}。\n我们将在24小时内回复您。` :
+                    `Thank you for your inquiry, ${formData.name}.\nWe will contact you within 24 hours.`;
+
+                alert(successMsg);
+                contactForm.reset();
+
+            }).catch(function(error) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+
+                // エラーメッセージ
+                const errorMsg = currentLang === 'ja' ?
+                    '送信に失敗しました。お手数ですが、お電話またはメールで直接ご連絡ください。' :
+                    currentLang === 'zh' ?
+                    '发送失败。请通过电话或电子邮件直接联系我们。' :
+                    'Failed to send. Please contact us directly by phone or email.';
+
+                alert(errorMsg);
+                console.error('EmailJS Error:', error);
+            });
+
+        } else {
+            // EmailJSが未設定の場合はシミュレーション
+            setTimeout(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+
+                const msg = currentLang === 'ja' ?
+                    `お問い合わせありがとうございます、${formData.name}様。\n※現在テストモードです。メール送信を有効化するにはEmailJSを設定してください。` :
+                    currentLang === 'zh' ?
+                    `感谢您的咨询，${formData.name}。\n※目前为测试模式。要启用电子邮件发送，请配置EmailJS。` :
+                    `Thank you for your inquiry, ${formData.name}.\n※Currently in test mode. Please configure EmailJS to enable email sending.`;
+
+                alert(msg);
+                contactForm.reset();
+            }, 1000);
+        }
     });
 }
 

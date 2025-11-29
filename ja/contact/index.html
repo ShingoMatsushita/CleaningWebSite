@@ -4,7 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>お問い合わせ | Asahi Cleaning Sydney</title>
+    <meta name="description" content="Asahi Cleaning Sydneyへのお問い合わせ。無料お見積り承ります。電話：0434-683-205">
     <link rel="stylesheet" href="../../style.css">
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            // EmailJSの初期化（公開鍵が設定されている場合のみ）
+            const publicKey = 'YOUR_PUBLIC_KEY'; // script.jsのEMAILJS_CONFIGと同じ値を設定
+            if (publicKey !== 'YOUR_PUBLIC_KEY') {
+                emailjs.init(publicKey);
+            }
+        })();
+    </script>
 </head>
 <body>
         <!-- ヘッダー（自動生成） -->
@@ -55,22 +67,22 @@
                 <p>以下のフォームからもお問い合わせいただけます</p>
             </div>
             <div style="background: white; padding: 3rem; border-radius: 15px; margin-top: 3rem; box-shadow: var(--shadow);">
-                <form style="display: grid; gap: 1.5rem;">
+                <form id="contactForm" style="display: grid; gap: 1.5rem;">
                     <div>
                         <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">お名前 <span style="color: red;">*</span></label>
-                        <input type="text" required style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
+                        <input type="text" id="name" name="name" required style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
                     </div>
                     <div>
                         <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">メールアドレス <span style="color: red;">*</span></label>
-                        <input type="email" required style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
+                        <input type="email" id="email" name="email" required style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
                     </div>
                     <div>
                         <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">電話番号</label>
-                        <input type="tel" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
+                        <input type="tel" id="phone" name="phone" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
                     </div>
                     <div>
                         <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">お問い合わせ内容 <span style="color: red;">*</span></label>
-                        <select required style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
+                        <select id="service" name="service" required style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
                             <option value="">選択してください</option>
                             <option value="airbnb">Airbnb清掃</option>
                             <option value="luxury">高級住宅清掃</option>
@@ -83,9 +95,9 @@
                     </div>
                     <div>
                         <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">メッセージ <span style="color: red;">*</span></label>
-                        <textarea required rows="5" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem; font-family: inherit;"></textarea>
+                        <textarea id="message" name="message" required rows="5" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem; font-family: inherit;"></textarea>
                     </div>
-                    <button type="submit" class="btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem; cursor: pointer;">送信する</button>
+                    <button type="submit" class="btn-primary submit-btn" style="width: 100%; padding: 1rem; font-size: 1.1rem; cursor: pointer;">送信する</button>
                 </form>
             </div>
         </div>

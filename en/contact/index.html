@@ -6,6 +6,17 @@
     <title>Contact Us | Asahi Cleaning Sydney</title>
     <meta name="description" content="Contact Asahi Cleaning Sydney for professional Japanese quality cleaning services. Free quotes available. Phone: 0434-683-205">
     <link rel="stylesheet" href="../../style.css">
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            // Initialize EmailJS (only if public key is configured)
+            const publicKey = 'YOUR_PUBLIC_KEY'; // Set the same value as EMAILJS_CONFIG in script.js
+            if (publicKey !== 'YOUR_PUBLIC_KEY') {
+                emailjs.init(publicKey);
+            }
+        })();
+    </script>
 </head>
 <body>
     <!-- Header (Auto-generated) -->
