@@ -502,13 +502,13 @@ document.addEventListener('DOMContentLoaded', function() {
         updateToolsArrows();
         updateBlogArrows();
 
-        // カーソルエフェクトの初期化
+        // カーソルエフェクトの初期化（モバイルでは無効化）
         initCursorEffect();
 
-        // パララックス効果の初期化
+        // パララックス効果の初期化（統合版）
         initParallax();
 
-        // ヘッダースクロールエフェクトの初期化
+        // ヘッダースクロールエフェクトの初期化（統合版）
         initHeaderScroll();
 
         // ドロップダウンメニューの初期化
@@ -519,35 +519,53 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 言語切替の初期化
         initLanguageSwitchers();
+        
+        // Intersection Observerの初期化（重複防止）
+        initScrollObserverOnce();
     });
 });
 
-// ヘッダースクロールエフェクト - 統合最適化版
-function initHeaderScroll() {
-    const header = document.getElementById('header');
-    if (!header) return;
+// 統合スクロールハンドラー - パフォーマンス最適化版
+let scrollTicking = false;
+let lastScrollY = 0;
+
+function handleScroll() {
+    if (!scrollTicking) {
+        window.requestAnimationFrame(updateScrollEffects);
+        scrollTicking = true;
+    }
+}
+
+function updateScrollEffects() {
+    const scrollY = window.pageYOffset;
+    lastScrollY = scrollY;
     
-    let ticking = false;
-
-    function updateHeader() {
-        const scrollY = window.pageYOffset;
-
+    // ヘッダースクロール効果
+    const header = document.getElementById('header');
+    if (header) {
         if (scrollY > 50) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
         }
-
-        ticking = false;
     }
-
-    // 単一のスクロールイベントリスナーで統合
-    window.addEventListener('scroll', function() {
-        if (!ticking) {
-            window.requestAnimationFrame(updateHeader);
-            ticking = true;
+    
+    // パララックス効果（軽量化：モバイルでは無効化）
+    if (window.innerWidth >= 768) {
+        const hero = document.querySelector('.hero');
+        if (hero && scrollY < hero.offsetHeight) {
+            const parallax = scrollY * 0.2; // 効果をさらに軽減
+            hero.style.transform = `translateY(${parallax}px)`;
         }
-    }, { passive: true });
+    }
+    
+    scrollTicking = false;
+}
+
+// ヘッダースクロールエフェクト - 統合最適化版
+function initHeaderScroll() {
+    // 統合スクロールハンドラーを使用
+    window.addEventListener('scroll', handleScroll, { passive: true });
 }
 
 // ドロップダウンメニュー機能
@@ -711,7 +729,13 @@ function initLanguageSwitchers() {
 }
 
 // カーソル追従エフェクト - 最適化版（モバイルでは無効化）
+let cursorEffectInitialized = false;
+
 function initCursorEffect() {
+    // 重複初期化を防止
+    if (cursorEffectInitialized) return;
+    cursorEffectInitialized = true;
+    
     // モバイルデバイスでは無効化
     if (window.innerWidth < 768 || 'ontouchstart' in window) {
         return;
@@ -724,10 +748,16 @@ function initCursorEffect() {
     const root = document.documentElement;
     let animationFrameId = null;
     let isActive = false;
+    let lastUpdateTime = 0;
+    const throttleMs = 16; // 約60fpsに制限
 
     const handleMouseMove = function(e) {
         mouseX = e.clientX;
         mouseY = e.clientY;
+        
+        const now = performance.now();
+        if (now - lastUpdateTime < throttleMs) return;
+        lastUpdateTime = now;
         
         if (!isActive) {
             isActive = true;
@@ -741,11 +771,21 @@ function initCursorEffect() {
             return;
         }
 
-        cursorX += (mouseX - cursorX) * 0.1;
-        cursorY += (mouseY - cursorY) * 0.1;
+        // 更新頻度を下げてパフォーマンス向上
+        cursorX += (mouseX - cursorX) * 0.08; // 0.1から0.08に変更
+        cursorY += (mouseY - cursorY) * 0.08;
 
         root.style.setProperty('--cursor-x', cursorX + 'px');
         root.style.setProperty('--cursor-y', cursorY + 'px');
+
+        // 変化が小さくなったら停止
+        const dx = Math.abs(mouseX - cursorX);
+        const dy = Math.abs(mouseY - cursorY);
+        if (dx < 1 && dy < 1) {
+            isActive = false;
+            animationFrameId = null;
+            return;
+        }
 
         animationFrameId = requestAnimationFrame(animateCursor);
     }
@@ -762,47 +802,29 @@ function initCursorEffect() {
     });
 }
 
-// パララックス効果 - 最適化版
+// パララックス効果 - 統合版（initHeaderScrollに統合済み）
 function initParallax() {
-    const hero = document.querySelector('.hero');
-    if (!hero) return;
-
-    let ticking = false;
-    let lastScrollY = 0;
-
-    function updateParallax() {
-        const scrolled = lastScrollY;
-        const parallax = scrolled * 0.3; // 効果を軽減
-
-        if (scrolled < hero.offsetHeight) {
-            hero.style.transform = `translateY(${parallax}px)`;
-        }
-        ticking = false;
-    }
-
-    window.addEventListener('scroll', function() {
-        lastScrollY = window.pageYOffset;
-
-        if (!ticking) {
-            window.requestAnimationFrame(updateParallax);
-            ticking = true;
-        }
-    }, { passive: true }); // passive オプションでパフォーマンス向上
+    // 統合スクロールハンドラーで処理されるため、ここでは何もしない
+    // モバイルでは無効化される
 }
 
 // モバイルメニュー（header生成後に初期化）
+let mobileMenuInitialized = false;
+
 function initMobileMenu() {
+    // 重複初期化を防止
+    if (mobileMenuInitialized) return;
+    
     const menuToggle = document.getElementById('menuToggle');
     const navLinks = document.getElementById('navLinks');
     
     if (menuToggle && navLinks) {
-        // 既存のイベントリスナーを削除してから追加（重複防止）
-        const newMenuToggle = menuToggle.cloneNode(true);
-        menuToggle.parentNode.replaceChild(newMenuToggle, menuToggle);
+        mobileMenuInitialized = true;
         
-        newMenuToggle.addEventListener('click', function() {
+        // ハンバーガーメニューのクリックイベント
+        menuToggle.addEventListener('click', function() {
             const isActive = navLinks.classList.toggle('active');
-            newMenuToggle.classList.toggle('active');
+            menuToggle.classList.toggle('active');
             
             // メニューが開いているときはbodyのスクロールを無効化
             if (isActive) {
@@ -827,12 +849,12 @@ function initMobileMenu() {
                 const isDropdownItem = link.closest('.dropdown-menu');
                 if (isDropdownItem) {
                     navLinks.classList.remove('active');
-                    newMenuToggle.classList.remove('active');
+                    menuToggle.classList.remove('active');
                     document.body.style.overflow = '';
                 } else if (!dropdown) {
                     // 通常のリンク（ドロップダウンではない）をクリックした場合は閉じる
                     navLinks.classList.remove('active');
-                    newMenuToggle.classList.remove('active');
+                    menuToggle.classList.remove('active');
                     document.body.style.overflow = '';
                 }
             });
@@ -842,9 +864,9 @@ function initMobileMenu() {
         document.addEventListener('click', function(e) {
             if (navLinks.classList.contains('active') && 
                 !navLinks.contains(e.target) && 
-                !newMenuToggle.contains(e.target)) {
+                !menuToggle.contains(e.target)) {
                 navLinks.classList.remove('active');
-                newMenuToggle.classList.remove('active');
+                menuToggle.classList.remove('active');
                 document.body.style.overflow = '';
             }
         });
@@ -1083,22 +1105,35 @@ function updateBlogArrows() {
     }
 }
 
-// ギャラリーのスクロールイベント監視
+// スクロールイベントのデバウンス関数
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// ギャラリーのスクロールイベント監視（デバウンス適用）
 const galleryGridEl = document.getElementById('galleryGrid');
 if (galleryGridEl) {
-    galleryGridEl.addEventListener('scroll', updateGalleryArrows);
+    galleryGridEl.addEventListener('scroll', debounce(updateGalleryArrows, 50), { passive: true });
 }
 
-// 使用道具のスクロールイベント監視
+// 使用道具のスクロールイベント監視（デバウンス適用）
 const toolsGrid = document.getElementById('toolsGrid');
 if (toolsGrid) {
-    toolsGrid.addEventListener('scroll', updateToolsArrows);
+    toolsGrid.addEventListener('scroll', debounce(updateToolsArrows, 50), { passive: true });
 }
 
-// ブログのスクロールイベント監視
+// ブログのスクロールイベント監視（デバウンス適用）
 const blogGrid = document.getElementById('blogGrid');
 if (blogGrid) {
-    blogGrid.addEventListener('scroll', updateBlogArrows);
+    blogGrid.addEventListener('scroll', debounce(updateBlogArrows, 50), { passive: true });
 }
 
 // モーダル開閉関数
@@ -1309,25 +1344,47 @@ function initScrollObserver() {
     return scrollObserver;
 }
 
-// DOMContentLoaded時に初期化
-document.addEventListener('DOMContentLoaded', function() {
+// Intersection Observerの初期化（重複防止）
+let observerInitialized = false;
+
+function initScrollObserverOnce() {
+    if (observerInitialized) return;
+    observerInitialized = true;
+    
     const observer = initScrollObserver();
     // 各要素にアニメーションクラスとobserverを適用
     document.querySelectorAll('.animate-on-scroll').forEach((el) => {
         observer.observe(el);
     });
-});
+}
 
 // カードにホバー時の軽量な3D効果を追加（パフォーマンス最適化版）
+let threeDEffectInitialized = false;
+
 function add3DEffect() {
+    // 重複初期化を防止
+    if (threeDEffectInitialized) return;
+    threeDEffectInitialized = true;
+    
     // モバイルデバイスでは3D効果をスキップ
-    if (window.innerWidth < 768) return;
+    if (window.innerWidth < 768 || 'ontouchstart' in window) return;
 
     const cards = document.querySelectorAll('.service-card, .area-card');
+    if (!cards.length) return;
 
-    cards.forEach(card => {
-        card.addEventListener('mousemove', function(e) {
-            if (!this.matches(':hover')) return;
+    // デバウンス用のタイマー
+    let rafId = null;
+
+    // 統合マウスムーブハンドラー（パフォーマンス向上）
+    function handleMouseMove(e) {
+        if (rafId) return; // 既にスケジュールされている場合はスキップ
+        
+        rafId = requestAnimationFrame(() => {
+            const card = e.target.closest('.service-card, .area-card');
+            if (!card || !card.matches(':hover')) {
+                rafId = null;
+                return;
+            }
 
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
@@ -1336,20 +1393,38 @@ function add3DEffect() {
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
 
-            const rotateX = (y - centerY) / 20; // 効果を半減
-            const rotateY = (centerX - x) / 20; // 効果を半減
+            // 効果をさらに軽減（パフォーマンス向上）
+            const rotateX = (y - centerY) / 30;
+            const rotateY = (centerX - x) / 30;
 
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-15px) scale(1.02)`;
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.01)`;
+            rafId = null;
         });
+    }
 
+    // イベント委譲を使用してパフォーマンス向上
+    document.addEventListener('mousemove', handleMouseMove, { passive: true });
+
+    // マウスリーブ時の処理
+    cards.forEach(card => {
         card.addEventListener('mouseleave', function() {
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
+            }
             card.style.transform = '';
         });
     });
 }
 
-// ページ読み込み後に3D効果を適用
-setTimeout(add3DEffect, 1000);
+// ページ読み込み後に3D効果を適用（遅延を短縮）
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(add3DEffect, 500);
+    });
+} else {
+    setTimeout(add3DEffect, 500);
+}
 
 // タッチスワイプ対応
 let touchStartX = 0;
