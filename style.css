@@ -757,18 +757,28 @@ nav {
 }
 
 .contact-form-container {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.98) 100%);
     backdrop-filter: blur(25px) saturate(200%);
     box-shadow:
-        0 30px 80px rgba(0, 128, 204, 0.12),
-        0 10px 40px rgba(0, 0, 0, 0.08),
+        0 40px 100px rgba(0, 128, 204, 0.25),
+        0 15px 50px rgba(0, 0, 0, 0.15),
         inset 0 1px 0 rgba(255, 255, 255, 0.9);
     border-radius: 30px;
-    padding: 3rem 2.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 3.5rem 3rem;
+    border: 2px solid rgba(255, 255, 255, 0.8);
     position: relative;
     z-index: 4;
     overflow: hidden;
+    transform: scale(1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-form-container:hover {
+    transform: scale(1.01);
+    box-shadow:
+        0 50px 120px rgba(0, 128, 204, 0.3),
+        0 20px 60px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .contact-form-container::before {
@@ -797,23 +807,27 @@ nav {
 
 .form-header {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     position: relative;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid rgba(0, 128, 204, 0.1);
 }
 
 .form-badge {
     display: inline-block;
-    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-    color: #1a1a1a;
-    padding: 0.5rem 1.2rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 700;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+    color: white;
+    padding: 0.6rem 1.5rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 800;
     margin-bottom: 1rem;
     box-shadow:
-        0 4px 15px rgba(255, 215, 0, 0.3),
+        0 6px 20px rgba(255, 107, 107, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.5);
     animation: pulse 2s ease-in-out infinite;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 @keyframes pulse {
@@ -826,14 +840,15 @@ nav {
 }
 
 .form-header h3 {
-    font-size: 2rem;
+    font-size: 2.2rem;
     color: var(--primary-color);
-    margin-bottom: 0.8rem;
+    margin-bottom: 1rem;
     background: linear-gradient(135deg, #1a1a1a 0%, #0080cc 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    font-weight: 700;
+    font-weight: 800;
+    line-height: 1.3;
 }
 
 .subtitle-icon {
@@ -870,32 +885,30 @@ nav {
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 1.2rem 1.2rem 1.2rem 3.5rem;
-    border: 2px solid transparent;
+    padding: 1.3rem 1.3rem 1.3rem 3.8rem;
+    border: 2px solid rgba(0, 128, 204, 0.15);
     background: white;
     border-radius: 15px;
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-family: inherit;
-    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     background-clip: padding-box;
     box-shadow:
-        0 4px 15px rgba(0, 0, 0, 0.05),
+        0 4px 15px rgba(0, 0, 0, 0.06),
         inset 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-    outline: none;
     border-color: var(--accent-color);
-    background: white;
     box-shadow:
-        0 8px 25px rgba(0, 128, 204, 0.15),
+        0 8px 25px rgba(0, 128, 204, 0.2),
         0 0 0 4px rgba(0, 128, 204, 0.1),
         inset 0 1px 2px rgba(0, 0, 0, 0.05);
-    transform: translateY(-2px);
 }
+
 
 .form-group input:focus + .input-icon,
 .form-group select:focus + .input-icon,
@@ -957,29 +970,46 @@ nav {
 }
 
 .submit-btn {
-    background: linear-gradient(135deg, #0080cc 0%, #0099ff 50%, #4da6ff 100%);
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 50%, #ff6b6b 100%);
     background-size: 200% 100%;
     color: white;
     border: none;
-    padding: 1.3rem 2.5rem;
-    border-radius: 15px;
-    font-size: 1.1rem;
-    font-weight: 700;
+    padding: 1.6rem 3rem;
+    border-radius: 18px;
+    font-size: 1.2rem;
+    font-weight: 800;
     cursor: pointer;
-    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: none;
+    letter-spacing: 0.02em;
     position: relative;
     overflow: hidden;
     box-shadow:
-        0 12px 35px rgba(0, 128, 204, 0.35),
-        0 4px 15px rgba(0, 128, 204, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        0 15px 45px rgba(255, 107, 107, 0.4),
+        0 6px 20px rgba(255, 107, 107, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.8rem;
-    margin-top: 0.5rem;
+    margin-top: 1rem;
+    width: 100%;
+    animation: buttonPulse 3s ease-in-out infinite;
+}
+
+@keyframes buttonPulse {
+    0%, 100% {
+        box-shadow:
+            0 15px 45px rgba(255, 107, 107, 0.4),
+            0 6px 20px rgba(255, 107, 107, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+    50% {
+        box-shadow:
+            0 20px 55px rgba(255, 107, 107, 0.5),
+            0 8px 25px rgba(255, 107, 107, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
 }
 
 .submit-btn::before {
@@ -994,12 +1024,13 @@ nav {
 }
 
 .submit-btn:hover {
-    transform: translateY(-3px);
+    transform: translateY(-5px) scale(1.02);
     box-shadow:
-        0 16px 45px rgba(0, 128, 204, 0.4),
-        0 6px 20px rgba(0, 128, 204, 0.25),
-        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        0 25px 60px rgba(255, 107, 107, 0.5),
+        0 10px 30px rgba(255, 107, 107, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
     background-position: 100% 0;
+    animation: none;
 }
 
 .submit-btn:hover::before {
@@ -1028,14 +1059,15 @@ nav {
 
 .form-privacy {
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 1.2rem;
     color: var(--text-gray);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.4rem;
-    opacity: 0.8;
+    gap: 0.5rem;
+    opacity: 0.85;
+    line-height: 1.5;
 }
 
 .privacy-icon {
@@ -1212,7 +1244,7 @@ nav {
 
 .process-steps {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2rem;
     max-width: 1400px;
     margin: 0 auto;
@@ -1223,6 +1255,23 @@ nav {
     position: relative;
     padding: 2.5rem 2rem;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.step > * {
+    text-align: center;
+}
+
+.step .step-detail-box,
+.step .step-info-box {
+    text-align: left;
+}
+
+.step-icon {
+    font-size: 3rem;
+    margin: 1rem 0;
+    line-height: 1;
 }
 
 .step-number {
@@ -2237,13 +2286,16 @@ nav {
 .cta {
     padding: 6rem 5% 5rem;
     background: linear-gradient(
-        180deg,
+        135deg,
         #0080cc 0%,
-        #0099ff 25%,
-        #4da6ff 50%,
-        #3399ff 75%,
-        #1a7acc 100%
+        #0099ff 20%,
+        #4da6ff 40%,
+        #3399ff 60%,
+        #1a7acc 80%,
+        #0080cc 100%
     );
+    background-size: 200% 200%;
+    animation: gradientShift 8s ease infinite;
     color: white;
     text-align: center;
     margin: 0;
@@ -2253,8 +2305,41 @@ nav {
         0 -10px 40px rgba(0, 128, 204, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
     position: relative;
-    overflow: visible;
+    overflow: hidden;
     z-index: 2;
+}
+
+.cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(ellipse at 20% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(77, 166, 255, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(0, 153, 255, 0.1) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.cta::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.05) 50%,
+        transparent 70%
+    );
+    animation: shimmerCTA 12s linear infinite;
+    pointer-events: none;
+    z-index: 0;
 }
 
 /* .cta-footer-wrapper内のCTAは透明背景を維持 */
@@ -2263,12 +2348,354 @@ nav {
     box-shadow: none;
 }
 
+.cta-footer-wrapper .cta::before,
+.cta-footer-wrapper .cta::after {
+    display: none;
+}
+
+/* CTA Inner Container */
+.cta-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* CTA Info Section - フォームの下に配置して補足情報として表示 */
+.cta-info {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    opacity: 0.95;
+}
+
+.cta-eyebrow {
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.5rem;
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cta-info h2 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.9) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.cta-lede {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.cta-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.cta-benefits li {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.95);
+    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.cta-benefits li:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.cta-direct {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.cta-direct-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 1.2rem 2rem;
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--accent-color);
+    text-decoration: none;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-direct-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 128, 204, 0.15), transparent);
+    transition: left 0.4s ease;
+}
+
+.cta-direct-link:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+    background: white;
+}
+
+.cta-direct-link:hover::before {
+    left: 100%;
+}
+
+/* CTA Form Panel - コンバージョン優先で大きく目立たせる */
+.cta-form-panel {
+    position: relative;
+    z-index: 1;
+    animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Form Subtitle & Stats */
+.form-subtitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    color: var(--text-gray);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.form-subtitle strong {
+    color: var(--accent-color);
+    font-weight: 700;
+    font-size: 1.1em;
+}
+
+.form-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.form-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.8rem;
+    background: rgba(0, 128, 204, 0.05);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.form-stat:hover {
+    background: rgba(0, 128, 204, 0.1);
+    transform: translateY(-2px);
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    color: var(--text-gray);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.2rem;
+}
+
+.stat-value {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--accent-color);
+    line-height: 1.2;
+}
+
+/* Form Choice Group */
+.form-choice-group {
+    margin-bottom: 1.5rem;
+}
+
+.choice-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-gray);
+    margin-bottom: 0.8rem;
+    text-align: center;
+}
+
+.choice-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+}
+
+.choice-chips button {
+    padding: 0.7rem 1.4rem;
+    background: rgba(0, 128, 204, 0.1);
+    border: 2px solid rgba(0, 128, 204, 0.25);
+    border-radius: 25px;
+    color: var(--accent-color);
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: inherit;
+}
+
+.choice-chips button:hover {
+    background: rgba(0, 128, 204, 0.2);
+    border-color: var(--accent-color);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 18px rgba(0, 128, 204, 0.25);
+}
+
+.choice-chips button.active {
+    background: linear-gradient(135deg, var(--accent-color), var(--gold-accent));
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 6px 20px rgba(0, 128, 204, 0.35);
+    transform: scale(1.05);
+}
+
+/* Contact Chips */
+.form-contact-options {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.contact-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9rem 1.5rem;
+    background: rgba(0, 128, 204, 0.08);
+    border: 2px solid rgba(0, 128, 204, 0.2);
+    border-radius: 12px;
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex: 1;
+    min-width: 150px;
+    justify-content: center;
+}
+
+.contact-chip:hover {
+    background: linear-gradient(135deg, var(--accent-color), var(--gold-accent));
+    color: white;
+    border-color: transparent;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 128, 204, 0.3);
+}
+
+.contact-chip span:first-child {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.contact-chip:hover span:first-child {
+    transform: scale(1.2) rotate(10deg);
+}
+
+@media (max-width: 768px) {
+    .form-stats {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+
+    .form-stat {
+        padding: 0.7rem;
+    }
+
+    .choice-chips {
+        gap: 0.5rem;
+    }
+
+    .choice-chips button {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .form-contact-options {
+        flex-direction: column;
+    }
+
+    .contact-chip {
+        width: 100%;
+        min-width: auto;
+    }
+}
+
 @keyframes shimmerCTA {
     0% {
         transform: translateX(-100%) translateY(-100%) rotate(45deg);
     }
     100% {
         transform: translateX(100%) translateY(100%) rotate(45deg);
+    }
+}
+
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
     }
 }
 
@@ -2281,6 +2708,28 @@ nav {
     .cta {
         padding: 4rem 5% 4rem;
     }
+
+    .cta-inner {
+        max-width: 100%;
+    }
+
+    .contact-form-container {
+        padding: 2.5rem 2rem;
+    }
+
+    .form-header h3 {
+        font-size: 1.8rem;
+    }
+
+    .form-badge {
+        font-size: 0.9rem;
+        padding: 0.5rem 1.2rem;
+    }
+
+    .submit-btn {
+        padding: 1.4rem 2.5rem;
+        font-size: 1.1rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -2291,6 +2740,24 @@ nav {
 
     .cta {
         padding: 3rem 5% 3rem;
+    }
+
+    .contact-form-container {
+        padding: 2rem 1.5rem;
+    }
+
+    .form-header h3 {
+        font-size: 1.6rem;
+    }
+
+    .form-badge {
+        font-size: 0.85rem;
+        padding: 0.45rem 1rem;
+    }
+
+    .submit-btn {
+        padding: 1.3rem 2rem;
+        font-size: 1rem;
     }
 }
 
@@ -3340,6 +3807,20 @@ footer::before {
     .services-grid,
     .process-steps {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .step {
+        padding: 2rem 1.5rem;
+    }
+    
+    .step-detail-box,
+    .step-info-box {
+        font-size: 0.9rem;
+    }
+    
+    .step-icon {
+        font-size: 2.5rem;
     }
 
     .btn-primary,
