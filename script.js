@@ -1201,22 +1201,19 @@ function initSmoothScroll() {
 }
 
 // ============================================
-// EmailJS設定 - フォーム送信機能
+// Googleスプレッドシート連携 - フォーム送信機能
 // ============================================
 //
-// EmailJSの設定手順:
-// 1. https://www.emailjs.com/ でアカウントを作成（無料プランあり）
-// 2. Email Serviceを追加（Gmail、Outlook等）
-// 3. Email Templateを作成
-// 4. 以下の値を取得して設定:
-//    - YOUR_PUBLIC_KEY: Account > General > Public Key
-//    - YOUR_SERVICE_ID: Email Services > Service ID
-//    - YOUR_TEMPLATE_ID: Email Templates > Template ID
+// Google Apps Script Webアプリの設定手順:
+// 1. Googleスプレッドシートを開く
+// 2. 拡張機能 > Apps Script を選択
+// 3. google-apps-script.js のコードをコピー＆ペースト
+// 4. デプロイ > 新しいデプロイ > 種類: ウェブアプリ を選択
+// 5. 実行ユーザー: 自分、アクセスできるユーザー: 全員 を選択
+// 6. デプロイしてURLを取得して以下に設定
 //
-const EMAILJS_CONFIG = {
-    publicKey: 'YOUR_PUBLIC_KEY',      // ここに公開鍵を入力
-    serviceId: 'YOUR_SERVICE_ID',       // ここにサービスIDを入力
-    templateId: 'YOUR_TEMPLATE_ID'      // ここにテンプレートIDを入力
+const GOOGLE_SHEETS_CONFIG = {
+    webAppUrl: 'https://script.google.com/macros/s/AKfycbwQC5OuO2uUhJq86t9bNSMPXZhjJVbN4Z3-zAaK646c1CSdmICmr_AFyGl4AaX7dkQRMw/exec'  // ここにGoogle Apps ScriptのWebアプリURLを入力
 };
 
 // フォーム送信処理
@@ -1237,23 +1234,51 @@ if (contactForm) {
 
         // フォームデータを取得
         const formData = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value || 'Not provided',
+            name: document.getElementById('name').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            phone: document.getElementById('phone').value.trim() || '',
             service: document.getElementById('service').value,
-            message: document.getElementById('message').value,
+            message: document.getElementById('message').value.trim() || '',
             language: currentLang
         };
 
-        // EmailJSで送信（設定済みの場合）
-        if (typeof emailjs !== 'undefined' &&
-            EMAILJS_CONFIG.publicKey !== 'YOUR_PUBLIC_KEY') {
+        // バリデーション
+        if (!formData.name || !formData.email || !formData.service) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            const errorMsg = currentLang === 'ja' ?
+                '必須項目を入力してください。' :
+                currentLang === 'zh' ?
+                '请填写必填项。' :
+                'Please fill in required fields.';
+            alert(errorMsg);
+            return;
+        }
 
-            emailjs.send(
-                EMAILJS_CONFIG.serviceId,
-                EMAILJS_CONFIG.templateId,
-                formData
-            ).then(function(response) {
+        // Google Apps Script Webアプリに送信
+        if (GOOGLE_SHEETS_CONFIG.webAppUrl && 
+            GOOGLE_SHEETS_CONFIG.webAppUrl !== 'YOUR_WEB_APP_URL') {
+            
+            // Google Apps Script Webアプリに送信
+            // CORS問題を回避するため、URLパラメータとして送信
+            const urlParams = new URLSearchParams();
+            urlParams.append('name', formData.name);
+            urlParams.append('email', formData.email);
+            urlParams.append('phone', formData.phone);
+            urlParams.append('service', formData.service);
+            urlParams.append('message', formData.message);
+            urlParams.append('language', formData.language);
+            
+            // POSTリクエストとして送信（CORS回避のためno-corsモード）
+            // no-corsモードではカスタムヘッダーを設定できないため、ブラウザが自動設定
+            fetch(GOOGLE_SHEETS_CONFIG.webAppUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: urlParams.toString()
+            })
+            .then(() => {
+                // no-corsモードではレスポンスを読み取れないため、成功とみなす
+                // 実際の保存はGoogle Apps Script側で行われている
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalText;
 
@@ -1266,10 +1291,16 @@ if (contactForm) {
 
                 alert(successMsg);
                 contactForm.reset();
-
-            }).catch(function(error) {
+            })
+            .catch(function(error) {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalText;
+
+                console.error('Google Sheets Error Details:', {
+                    error: error,
+                    message: error.message,
+                    formData: formData
+                });
 
                 // エラーメッセージ
                 const errorMsg = currentLang === 'ja' ?
@@ -1279,20 +1310,19 @@ if (contactForm) {
                     'Failed to send. Please contact us directly by phone or email.';
 
                 alert(errorMsg);
-                console.error('EmailJS Error:', error);
             });
 
         } else {
-            // EmailJSが未設定の場合はシミュレーション
+            // WebアプリURLが未設定の場合はシミュレーション
             setTimeout(() => {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalText;
 
                 const msg = currentLang === 'ja' ?
-                    `お問い合わせありがとうございます、${formData.name}様。\n※現在テストモードです。メール送信を有効化するにはEmailJSを設定してください。` :
+                    `お問い合わせありがとうございます、${formData.name}様。\n※現在テストモードです。Google Apps ScriptのWebアプリURLを設定してください。` :
                     currentLang === 'zh' ?
-                    `感谢您的咨询，${formData.name}。\n※目前为测试模式。要启用电子邮件发送，请配置EmailJS。` :
-                    `Thank you for your inquiry, ${formData.name}.\n※Currently in test mode. Please configure EmailJS to enable email sending.`;
+                    `感谢您的咨询，${formData.name}。\n※目前为测试模式。请配置Google Apps Script Web应用URL。` :
+                    `Thank you for your inquiry, ${formData.name}.\n※Currently in test mode. Please configure Google Apps Script Web App URL.`;
 
                 alert(msg);
                 contactForm.reset();
