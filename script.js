@@ -190,6 +190,27 @@ function getJapaneseHeader(rootPath) {
                 </li>
             </ul>
 
+            <div class="mobile-language-switcher" id="mobileLanguageSwitcher">
+                <button class="mobile-lang-btn" id="mobileLangBtn" aria-label="言語を切り替え">
+                    <span class="mobile-lang-icon">🇯🇵</span>
+                    <span class="mobile-lang-text">日本語</span>
+                </button>
+                <div class="mobile-lang-menu" id="mobileLangMenu">
+                    <a href="${rootPath}ja/Home.html" class="mobile-lang-item active">
+                        <span class="mobile-lang-item-icon">🇯🇵</span>
+                        <span class="mobile-lang-item-text">日本語</span>
+                    </a>
+                    <a href="${rootPath}en/Home.html" class="mobile-lang-item">
+                        <span class="mobile-lang-item-icon">🇦🇺</span>
+                        <span class="mobile-lang-item-text">English</span>
+                    </a>
+                    <a href="${rootPath}zh/Home.html" class="mobile-lang-item">
+                        <span class="mobile-lang-item-icon">🇨🇳</span>
+                        <span class="mobile-lang-item-text">中文</span>
+                    </a>
+                </div>
+            </div>
+
             <div class="menu-toggle" id="menuToggle">
                 <span></span>
                 <span></span>
@@ -211,16 +232,147 @@ function getEnglishHeader(rootPath) {
                 <img src="${rootPath}img/logo.png" alt="Asahi Cleaning" class="logo">
             </a>
             <ul class="nav-links" id="navLinks">
-                <li><a href="${rootPath}en/Home.html#services">Services</a></li>
-                <li><a href="${rootPath}en/Home.html#features">Features</a></li>
-                <li><a href="${rootPath}en/Home.html#tools">Tools & Products</a></li>
-                <li><a href="${rootPath}en/Home.html#service-area">Service Areas</a></li>
-                <li><a href="${rootPath}en/Home.html#process">Process</a></li>
+                <li class="dropdown">
+                    <a href="${rootPath}en/Home.html#services">Services <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="${rootPath}en/services/airbnb-cleaning.html" class="dropdown-item">
+                            <span class="dropdown-icon">🏠</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Airbnb Cleaning</span>
+                                <span class="dropdown-desc">Thorough cleaning for guest satisfaction</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}en/services/luxury-residential-cleaning.html" class="dropdown-item">
+                            <span class="dropdown-icon">✨</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Luxury Residential Cleaning</span>
+                                <span class="dropdown-desc">Premium service for discerning clients</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}en/services/office-cleaning.html" class="dropdown-item">
+                            <span class="dropdown-icon">🏢</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Office Cleaning</span>
+                                <span class="dropdown-desc">Maintain a comfortable workspace</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}en/services/deep-cleaning.html" class="dropdown-item">
+                            <span class="dropdown-icon">🧹</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Deep Cleaning</span>
+                                <span class="dropdown-desc">Thorough cleaning of every corner</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}en/services/japanese-style-styling.html" class="dropdown-item">
+                            <span class="dropdown-icon">🌸</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Japanese-Style Space Styling</span>
+                                <span class="dropdown-desc">Spaces with Japanese aesthetic</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}en/services/regular-cleaning-plan.html" class="dropdown-item">
+                            <span class="dropdown-icon">🔄</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Regular Maintenance Plans</span>
+                                <span class="dropdown-desc">Maintain consistent cleanliness</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="${rootPath}en/service-areas/index.html">Service Areas <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="${rootPath}en/service-areas/mosman.html" class="dropdown-item">
+                            <span class="dropdown-icon">📍</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Mosman</span>
+                                <span class="dropdown-desc">Prestigious residential area</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}en/service-areas/palm-beach.html" class="dropdown-item">
+                            <span class="dropdown-icon">🏖️</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Palm Beach</span>
+                                <span class="dropdown-desc">Beautiful beach area</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}en/service-areas/bondi-beach.html" class="dropdown-item">
+                            <span class="dropdown-icon">🌊</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Bondi Beach</span>
+                                <span class="dropdown-desc">World-famous beach</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}en/service-areas/manly.html" class="dropdown-item">
+                            <span class="dropdown-icon">⛵</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Manly</span>
+                                <span class="dropdown-desc">Popular tourist area</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="${rootPath}en/about/features.html">Features <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="${rootPath}en/about/features.html" class="dropdown-item">
+                            <span class="dropdown-icon">⭐</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Our Strengths</span>
+                                <span class="dropdown-desc">Why we're chosen</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}en/tools/index.html" class="dropdown-item">
+                            <span class="dropdown-icon">🧽</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Tools & Products</span>
+                                <span class="dropdown-desc">High-quality Japanese products</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}en/about/cleaning-process.html" class="dropdown-item">
+                            <span class="dropdown-icon">📋</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Cleaning Process</span>
+                                <span class="dropdown-desc">How it works</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}en/about/FAQ.html" class="dropdown-item">
+                            <span class="dropdown-icon">❓</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">FAQ</span>
+                                <span class="dropdown-desc">Frequently asked questions</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
                 <li><a href="${rootPath}en/Home.html#gallery">Gallery</a></li>
-                <li><a href="${rootPath}en/Home.html#blog">Blog</a></li>
-                <li><a href="${rootPath}en/Home.html#testimonials">Testimonials</a></li>
-                <li><a href="${rootPath}en/Home.html#recruit">Careers</a></li>
-                <li><a href="${rootPath}en/Home.html#contact" class="contact-btn">Contact</a></li>
+                <li class="dropdown">
+                    <a href="#" class="no-link">More <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu">
+                        <a href="${rootPath}en/blog/index.html" class="dropdown-item">
+                            <span class="dropdown-icon">📝</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Blog</span>
+                                <span class="dropdown-desc">Cleaning tips and updates</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}en/about/recruit.html" class="dropdown-item">
+                            <span class="dropdown-icon">💼</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Careers</span>
+                                <span class="dropdown-desc">Join our team</span>
+                            </div>
+                        </a>
+                        <a href="${rootPath}en/Home.html#testimonials" class="dropdown-item">
+                            <span class="dropdown-icon">💬</span>
+                            <div class="dropdown-content">
+                                <span class="dropdown-title">Testimonials</span>
+                                <span class="dropdown-desc">Client reviews and feedback</span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li><a href="${rootPath}en/contact/index.html" class="cta-link">Free Quote</a></li>
                 <li class="dropdown language-dropdown">
                     <a href="#" class="no-link">🌐 EN <span class="dropdown-arrow">▼</span></a>
                     <div class="dropdown-menu language-menu">
@@ -245,6 +397,27 @@ function getEnglishHeader(rootPath) {
                     </div>
                 </li>
             </ul>
+
+            <div class="mobile-language-switcher" id="mobileLanguageSwitcher">
+                <button class="mobile-lang-btn" id="mobileLangBtn" aria-label="Switch language">
+                    <span class="mobile-lang-icon">🇦🇺</span>
+                    <span class="mobile-lang-text">EN</span>
+                </button>
+                <div class="mobile-lang-menu" id="mobileLangMenu">
+                    <a href="${rootPath}ja/Home.html" class="mobile-lang-item">
+                        <span class="mobile-lang-item-icon">🇯🇵</span>
+                        <span class="mobile-lang-item-text">日本語</span>
+                    </a>
+                    <a href="${rootPath}en/Home.html" class="mobile-lang-item active">
+                        <span class="mobile-lang-item-icon">🇦🇺</span>
+                        <span class="mobile-lang-item-text">English</span>
+                    </a>
+                    <a href="${rootPath}zh/Home.html" class="mobile-lang-item">
+                        <span class="mobile-lang-item-icon">🇨🇳</span>
+                        <span class="mobile-lang-item-text">中文</span>
+                    </a>
+                </div>
+            </div>
 
             <div class="menu-toggle" id="menuToggle">
                 <span></span>
@@ -432,6 +605,27 @@ function getChineseHeader(rootPath) {
                     </div>
                 </li>
             </ul>
+
+            <div class="mobile-language-switcher" id="mobileLanguageSwitcher">
+                <button class="mobile-lang-btn" id="mobileLangBtn" aria-label="切换语言">
+                    <span class="mobile-lang-icon">🇨🇳</span>
+                    <span class="mobile-lang-text">中文</span>
+                </button>
+                <div class="mobile-lang-menu" id="mobileLangMenu">
+                    <a href="${rootPath}ja/Home.html" class="mobile-lang-item">
+                        <span class="mobile-lang-item-icon">🇯🇵</span>
+                        <span class="mobile-lang-item-text">日本語</span>
+                    </a>
+                    <a href="${rootPath}en/Home.html" class="mobile-lang-item">
+                        <span class="mobile-lang-item-icon">🇦🇺</span>
+                        <span class="mobile-lang-item-text">English</span>
+                    </a>
+                    <a href="${rootPath}zh/Home.html" class="mobile-lang-item active">
+                        <span class="mobile-lang-item-icon">🇨🇳</span>
+                        <span class="mobile-lang-item-text">中文</span>
+                    </a>
+                </div>
+            </div>
 
             <div class="menu-toggle" id="menuToggle">
                 <span></span>
@@ -663,7 +857,7 @@ function initDropdownMenus() {
     });
 }
 
-// サービスチップ（ショートカット）機能
+// サービスチップ（ショートカット）機能 - 複数選択対応
 function initServiceChips() {
     const groups = document.querySelectorAll('.choice-chips');
 
@@ -671,30 +865,65 @@ function initServiceChips() {
         const targetId = group.dataset.target;
         const target = targetId ? document.getElementById(targetId) : null;
         const buttons = Array.from(group.querySelectorAll('button[data-value]'));
+        const displayInput = document.getElementById('service-display');
 
         if (!buttons.length) return;
 
-        const setActive = (value) => {
+        // 選択された値を配列で管理
+        let selectedValues = [];
+
+        // 選択状態を更新
+        const updateSelection = () => {
             buttons.forEach(btn => {
-                btn.classList.toggle('active', value && btn.dataset.value === value);
+                const value = btn.dataset.value;
+                btn.classList.toggle('active', selectedValues.includes(value));
             });
+
+            // 隠しフィールドに値を設定（カンマ区切り）
+            if (target) {
+                target.value = selectedValues.join(',');
+            }
+
+            // 表示用フィールドを更新
+            if (displayInput) {
+                if (selectedValues.length === 0) {
+                    displayInput.value = '';
+                    displayInput.placeholder = '上記から選択してください';
+                } else {
+                    const labels = selectedValues.map(val => {
+                        const btn = buttons.find(b => b.dataset.value === val);
+                        return btn ? btn.textContent : val;
+                    });
+                    displayInput.value = labels.join('、');
+                }
+            }
         };
 
+        // ボタンクリックで選択/解除
         buttons.forEach(button => {
             button.addEventListener('click', () => {
                 const value = button.dataset.value;
+                const index = selectedValues.indexOf(value);
+                
+                if (index > -1) {
+                    // 既に選択されている場合は解除
+                    selectedValues.splice(index, 1);
+                } else {
+                    // 選択されていない場合は追加
+                    selectedValues.push(value);
+                }
+                
+                updateSelection();
+                
+                // changeイベントを発火
                 if (target) {
-                    target.value = value;
                     target.dispatchEvent(new Event('change', { bubbles: true }));
                 }
-                setActive(value);
             });
         });
 
-        if (target) {
-            target.addEventListener('change', () => setActive(target.value));
-            setActive(target.value);
-        }
+        // 初期状態を設定
+        updateSelection();
     });
 }
 
@@ -868,6 +1097,59 @@ function initMobileMenu() {
                 navLinks.classList.remove('active');
                 menuToggle.classList.remove('active');
                 document.body.style.overflow = '';
+            }
+        });
+    }
+
+    // モバイル用言語切り替えボタンの初期化
+    const mobileLangBtn = document.getElementById('mobileLangBtn');
+    const mobileLangMenu = document.getElementById('mobileLangMenu');
+    const mobileLangSwitcher = document.getElementById('mobileLanguageSwitcher');
+    
+    if (mobileLangBtn && mobileLangMenu && mobileLangSwitcher) {
+        // 現在の言語を判定してボタンの表示を更新
+        const currentPath = window.location.pathname;
+        let currentLang = 'ja';
+        let currentLangIcon = '🇯🇵';
+        let currentLangText = '日本語';
+        
+        if (currentPath.includes('/en/')) {
+            currentLang = 'en';
+            currentLangIcon = '🇦🇺';
+            currentLangText = 'EN';
+        } else if (currentPath.includes('/zh/')) {
+            currentLang = 'zh';
+            currentLangIcon = '🇨🇳';
+            currentLangText = '中文';
+        }
+        
+        // ボタンの表示を更新
+        const langIcon = mobileLangBtn.querySelector('.mobile-lang-icon');
+        const langText = mobileLangBtn.querySelector('.mobile-lang-text');
+        if (langIcon) langIcon.textContent = currentLangIcon;
+        if (langText) langText.textContent = currentLangText;
+        
+        // アクティブな言語アイテムを更新
+        mobileLangMenu.querySelectorAll('.mobile-lang-item').forEach(item => {
+            item.classList.remove('active');
+            const itemPath = item.getAttribute('href');
+            if ((currentLang === 'ja' && itemPath.includes('/ja/')) ||
+                (currentLang === 'en' && itemPath.includes('/en/')) ||
+                (currentLang === 'zh' && itemPath.includes('/zh/'))) {
+                item.classList.add('active');
+            }
+        });
+        
+        // 言語切り替えボタンのクリックイベント
+        mobileLangBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            mobileLangSwitcher.classList.toggle('active');
+        });
+        
+        // メニュー外側をクリックしたら閉じる
+        document.addEventListener('click', function(e) {
+            if (!mobileLangSwitcher.contains(e.target)) {
+                mobileLangSwitcher.classList.remove('active');
             }
         });
     }
@@ -1233,17 +1515,18 @@ if (contactForm) {
         submitBtn.innerHTML = `<span>${sendingText}</span>`;
 
         // フォームデータを取得
+        const serviceValue = document.getElementById('service').value;
         const formData = {
             name: document.getElementById('name').value.trim(),
             email: document.getElementById('email').value.trim(),
             phone: document.getElementById('phone').value.trim() || '',
-            service: document.getElementById('service').value,
+            service: serviceValue,
             message: document.getElementById('message').value.trim() || '',
             language: currentLang
         };
 
         // バリデーション
-        if (!formData.name || !formData.email || !formData.service) {
+        if (!formData.name || !formData.email || !serviceValue || serviceValue.trim() === '') {
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalText;
             const errorMsg = currentLang === 'ja' ?
@@ -1537,4 +1820,144 @@ function initMobileDropdowns() {
 // ページ読み込み時に初期化
 window.addEventListener('load', function() {
     initMobileDropdowns();
+    initAreaMap();
 });
+
+// ============================================
+// 対応エリア地図の初期化
+// ============================================
+let areaMap = null;
+let areaMarkers = {};
+
+function initAreaMap() {
+    const mapElement = document.getElementById('areaMap');
+    if (!mapElement) return;
+
+    // 各地域の座標
+    const areas = {
+        'mosman': { lat: -33.8281, lng: 151.2394, name: 'Mosman' },
+        'palm-beach': { lat: -33.5967, lng: 151.3250, name: 'Palm Beach' },
+        'bondi-beach': { lat: -33.8915, lng: 151.2767, name: 'Bondi Beach' },
+        'manly': { lat: -33.7970, lng: 151.2880, name: 'Manly' }
+    };
+
+    // 地図の中心（シドニー全体が見える位置）
+    const center = { lat: -33.8688, lng: 151.2093 };
+
+    // Google Maps APIが読み込まれているか確認
+    if (typeof google === 'undefined' || !google.maps) {
+        console.warn('Google Maps API is not loaded. Using iframe fallback.');
+        // APIキーがない場合は、iframeフォールバックを表示
+        mapElement.innerHTML = '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d424146.1027894763!2d150.651796!3d-33.847927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b129838f39a743f%3A0x3017d681632aac0!2z44K144Kk44Kv44Oq44O844Kv!5e0!3m2!1sja!2sjp!4v1700000000000!5m2!1sja!2sjp" width="100%" height="400" style="border:0; border-radius: 20px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
+        return;
+    }
+
+    // 地図を初期化
+    areaMap = new google.maps.Map(mapElement, {
+        center: center,
+        zoom: 11,
+        styles: [
+            {
+                featureType: 'poi',
+                elementType: 'labels',
+                stylers: [{ visibility: 'off' }]
+            }
+        ],
+        mapTypeControl: false,
+        streetViewControl: false,
+        fullscreenControl: true
+    });
+
+    // 各地域にマーカーを配置
+    Object.keys(areas).forEach(areaKey => {
+        const area = areas[areaKey];
+        const marker = new google.maps.Marker({
+            position: { lat: area.lat, lng: area.lng },
+            map: areaMap,
+            title: area.name,
+            icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 12,
+                fillColor: '#0080cc',
+                fillOpacity: 0.8,
+                strokeColor: '#ffffff',
+                strokeWeight: 3
+            },
+            animation: null,
+            zIndex: 1
+        });
+
+        areaMarkers[areaKey] = marker;
+    });
+
+    // カードのホバーイベント
+    const areaCards = document.querySelectorAll('.area-card-link[data-area]');
+    areaCards.forEach(card => {
+        const areaKey = card.getAttribute('data-area');
+        
+        card.addEventListener('mouseenter', function() {
+            highlightMarker(areaKey);
+        });
+
+        card.addEventListener('mouseleave', function() {
+            resetMarkers();
+        });
+    });
+}
+
+// マーカーを強調
+function highlightMarker(areaKey) {
+    if (!areaMarkers[areaKey]) return;
+
+    // すべてのマーカーをリセット
+    resetMarkers();
+
+    // 選択されたマーカーを強調
+    const marker = areaMarkers[areaKey];
+    marker.setIcon({
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 18,
+        fillColor: '#ff6b35',
+        fillOpacity: 1,
+        strokeColor: '#ffffff',
+        strokeWeight: 4
+    });
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    marker.setZIndex(1000);
+
+    // 地図の中心をマーカーに移動
+    areaMap.setCenter(marker.getPosition());
+    areaMap.setZoom(13);
+}
+
+// すべてのマーカーをリセット
+function resetMarkers() {
+    Object.keys(areaMarkers).forEach(areaKey => {
+        const marker = areaMarkers[areaKey];
+        marker.setIcon({
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 12,
+            fillColor: '#0080cc',
+            fillOpacity: 0.8,
+            strokeColor: '#ffffff',
+            strokeWeight: 3
+        });
+        marker.setAnimation(null);
+        marker.setZIndex(1);
+    });
+
+    // 地図のズームと中心をリセット
+    if (areaMap) {
+        areaMap.setCenter({ lat: -33.8688, lng: 151.2093 });
+        areaMap.setZoom(11);
+    }
+}
+
+// Google Maps APIのコールバック関数
+function initMap() {
+    // initAreaMapは既に呼ばれるので、ここでは何もしない
+    // ただし、APIが読み込まれた後に再初期化する場合に備える
+    if (document.getElementById('areaMap') && !areaMap) {
+        initAreaMap();
+    }
+}

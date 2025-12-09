@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asahi Cleaning Sydney - 日本品質の清掃サービス | Japanese Quality Cleaning Service</title>
-    <meta name="description" content="シドニーで唯一の日本品質清掃サービス。Airbnb清掃、高級住宅清掃、オフィス清掃を日本人スタッフが日本製洗剤で丁寧に対応。無料見積り受付中。">
+    <meta name="description" content="シドニーで唯一の日本品質清掃サービス。Airbnb清掃、高級住宅清掃、オフィス清掃を日本人スタッフが日本製洗剤で丁寧に対応。無料見積もり受付中。">
     <meta name="keywords" content="清掃サービス シドニー, 日本人 清掃, Airbnb清掃, 高級住宅清掃, オフィス清掃, ディープクリーニング, 日本品質, Dee Why">
 
     <!-- Open Graph / Facebook -->
@@ -57,6 +57,16 @@
     </script>
 
     <link rel="stylesheet" href="../style.css">
+    <!-- Google Maps JavaScript API -->
+    <!-- 
+        APIキーを設定する手順:
+        1. https://console.cloud.google.com/google/maps-apis にアクセス
+        2. プロジェクトを作成または選択
+        3. "Maps JavaScript API" を有効化
+        4. "認証情報" から APIキーを作成
+        5. 以下のスクリプトタグの YOUR_API_KEY を実際のAPIキーに置き換えてください
+    -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
 </head>
 <body>
     <!-- ヘッダー（自動生成） -->
@@ -73,7 +83,6 @@
                    Airbnbオーナー様、富裕層のお客様に選ばれています。</p>
                 <div class="hero-buttons">
                     <a href="#contact" class="btn-primary">無料見積もり</a>
-                    <a href="#services" class="btn-secondary">サービス詳細</a>
                 </div>
             </div>
         </div>
@@ -86,36 +95,54 @@
             <p>日本のおもてなしの心を込めた、最高品質の清掃サービスをご提供します</p>
         </div>
         <div class="services-grid">
-            <div class="service-card animate-on-scroll">
-                <div class="service-icon">🏠</div>
-                <h3><a href="services/airbnb-cleaning.html" style="color: var(--primary-color); text-decoration: none;">Airbnb清掃</a></h3>
-                <p>ゲストチェックイン前の徹底清掃。リネン交換、アメニティ補充、細部まで完璧に仕上げます。5つ星レビューをサポート。</p>
-            </div>
-            <div class="service-card animate-on-scroll">
-                <div class="service-icon">✨</div>
-                <h3><a href="services/luxury-residential-cleaning.html" style="color: var(--primary-color); text-decoration: none;">高級住宅清掃</a></h3>
-                <p>富裕層のお客様向けの最上級清掃サービス。日本製の高品質清掃用具と技術で、隅々まで丁寧に清掃いたします。</p>
-            </div>
-            <div class="service-card animate-on-scroll">
-                <div class="service-icon">🏢</div>
-                <h3><a href="services/office-cleaning.html" style="color: var(--primary-color); text-decoration: none;">オフィス清掃</a></h3>
-                <p>日本企業様向けの定期清掃サービス。清潔で快適なオフィス環境を維持し、生産性向上をサポートします。</p>
-            </div>
-            <div class="service-card animate-on-scroll">
-                <div class="service-icon">🧹</div>
-                <h3><a href="services/deep-cleaning.html" style="color: var(--primary-color); text-decoration: none;">ディープクリーニング</a></h3>
-                <p>引っ越し前後の徹底清掃。カーペット、窓、キッチンなど、普段手の届かない箇所まで完璧に清掃します。</p>
-            </div>
-            <div class="service-card animate-on-scroll">
-                <div class="service-icon">🌸</div>
-                <h3><a href="services/japanese-style-styling.html" style="color: var(--primary-color); text-decoration: none;">和風空間演出</a></h3>
-                <p>日本の美意識を活かした空間演出。季節の花や和のインテリアで、落ち着きのある空間を創造します。</p>
-            </div>
-            <div class="service-card animate-on-scroll">
-                <div class="service-icon">🔄</div>
-                <h3><a href="services/regular-cleaning-plan.html" style="color: var(--primary-color); text-decoration: none;">定期清掃プラン</a></h3>
-                <p>週1回から月1回まで、お客様のニーズに合わせた定期清掃プラン。常に清潔な環境を維持します。</p>
-            </div>
+            <a href="services/airbnb-cleaning.html" class="service-card-link">
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🏠</div>
+                    <h3>Airbnb清掃</h3>
+                    <p>ゲストチェックイン前の徹底清掃。リネン交換、アメニティ補充、細部まで完璧に仕上げます。5つ星レビューをサポート。</p>
+                    <span class="card-link-indicator">詳細を見る →</span>
+                </div>
+            </a>
+            <a href="services/luxury-residential-cleaning.html" class="service-card-link">
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">✨</div>
+                    <h3>高級住宅清掃</h3>
+                    <p>富裕層のお客様向けの最上級清掃サービス。日本製の高品質清掃用具と技術で、隅々まで丁寧に清掃いたします。</p>
+                    <span class="card-link-indicator">詳細を見る →</span>
+                </div>
+            </a>
+            <a href="services/office-cleaning.html" class="service-card-link">
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🏢</div>
+                    <h3>オフィス清掃</h3>
+                    <p>日本企業様向けの定期清掃サービス。清潔で快適なオフィス環境を維持し、生産性向上をサポートします。</p>
+                    <span class="card-link-indicator">詳細を見る →</span>
+                </div>
+            </a>
+            <a href="services/deep-cleaning.html" class="service-card-link">
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🧹</div>
+                    <h3>ディープクリーニング</h3>
+                    <p>引っ越し前後の徹底清掃。カーペット、窓、キッチンなど、普段手の届かない箇所まで完璧に清掃します。</p>
+                    <span class="card-link-indicator">詳細を見る →</span>
+                </div>
+            </a>
+            <a href="services/japanese-style-styling.html" class="service-card-link">
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🌸</div>
+                    <h3>和風空間演出</h3>
+                    <p>日本の美意識を活かした空間演出。季節の花や和のインテリアで、落ち着きのある空間を創造します。</p>
+                    <span class="card-link-indicator">詳細を見る →</span>
+                </div>
+            </a>
+            <a href="services/regular-cleaning-plan.html" class="service-card-link">
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🔄</div>
+                    <h3>定期清掃プラン</h3>
+                    <p>週1回から月1回まで、お客様のニーズに合わせた定期清掃プラン。常に清潔な環境を維持します。</p>
+                    <span class="card-link-indicator">詳細を見る →</span>
+                </div>
+            </a>
         </div>
     </section>
 
@@ -123,11 +150,14 @@
     <section class="features" id="features">
         <div class="features-container">
             <div class="feature-image animate-on-scroll">
-                <img src="https://images.unsplash.com/photo-1563453392212-326f5e854473?q=80&w=2070" alt="日本品質の清掃サービス" loading="lazy">
+                <img src="../img/whychooseus.png" alt="日本品質の清掃サービス" loading="lazy">
             </div>
             <div class="feature-text">
-                <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
+                <div class="section-header feature-header" style="text-align: left; margin-bottom: 3rem;">
                     <h2>なぜ私たちが選ばれるのか</h2>
+                    <p style="margin-top: 1rem; font-size: 1.1rem; color: var(--text-gray); opacity: 0.9;">
+                        日本品質の清掃サービスが選ばれる理由
+                    </p>
                 </div>
                 <ul class="feature-list">
                     <li class="feature-item animate-on-scroll">
@@ -167,28 +197,108 @@
     <section class="process" id="process">
         <div class="section-header animate-on-scroll">
             <h2>ご利用の流れ</h2>
-            <p>簡単4ステップで、プロフェッショナルな清掃サービスをご利用いただけます</p>
+            <p>簡単3ステップで、プロフェッショナルな清掃サービスをご利用いただけます</p>
         </div>
-        <div class="process-steps">
-            <div class="step animate-on-scroll">
-                <div class="step-number">1</div>
-                <h3>お問い合わせ</h3>
-                <p>お電話またはメールでお気軽にご連絡ください。日本語・英語対応可能です。</p>
+        <div class="process-steps-new">
+            <svg class="process-connector-svg" viewBox="0 0 200 1000" preserveAspectRatio="xMidYMin meet">
+                <defs>
+                    <linearGradient id="flowGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#0080cc;stop-opacity:0.9" />
+                        <stop offset="30%" style="stop-color:#3399ff;stop-opacity:0.8" />
+                        <stop offset="60%" style="stop-color:#4da6ff;stop-opacity:0.7" />
+                        <stop offset="100%" style="stop-color:#66b3ff;stop-opacity:0.5" />
+                    </linearGradient>
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                    <radialGradient id="dotGradient1">
+                        <stop offset="0%" style="stop-color:#0080cc;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#3399ff;stop-opacity:0.8" />
+                    </radialGradient>
+                    <radialGradient id="dotGradient2">
+                        <stop offset="0%" style="stop-color:#3399ff;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#4da6ff;stop-opacity:0.8" />
+                    </radialGradient>
+                </defs>
+                <!-- 曲線パス1: Step 1 → Step 2 (右から左へ流れる) -->
+                <path id="path1" class="flow-path" d="M 100 120 Q 150 250, 100 380 Q 50 510, 100 640" 
+                      fill="none" 
+                      stroke="url(#flowGradient)" 
+                      stroke-width="6" 
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      filter="url(#glow)"/>
+                <!-- 曲線パス2: Step 2 → Step 3 (左から右へ流れる) -->
+                <path id="path2" class="flow-path" d="M 100 640 Q 150 770, 100 900 Q 50 1030, 100 1160" 
+                      fill="none" 
+                      stroke="url(#flowGradient)" 
+                      stroke-width="6" 
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      filter="url(#glow)"/>
+                <!-- 流れるドット1 -->
+                <circle class="flow-dot flow-dot-1" r="8" fill="url(#dotGradient1)">
+                    <animateMotion dur="5s" repeatCount="indefinite" begin="0s" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1">
+                        <mpath href="#path1"/>
+                    </animateMotion>
+                    <animate attributeName="opacity" values="0.7;1;0.7" dur="2.5s" repeatCount="indefinite"/>
+                </circle>
+                <!-- 流れるドット2 -->
+                <circle class="flow-dot flow-dot-2" r="8" fill="url(#dotGradient2)">
+                    <animateMotion dur="5s" repeatCount="indefinite" begin="2.5s" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1">
+                        <mpath href="#path2"/>
+                    </animateMotion>
+                    <animate attributeName="opacity" values="0.7;1;0.7" dur="2.5s" repeatCount="indefinite" begin="2.5s"/>
+                </circle>
+            </svg>
+            <div class="step-new step-right animate-on-scroll">
+                <div class="step-content">
+                    <div class="step-icon-container">
+                        <div class="step-icon-bg">
+                            <div class="step-icon">📞</div>
+                            <div class="step-sparkle">✨</div>
+                        </div>
+                    </div>
+                    <div class="step-text">
+                        <h3>1. お問い合わせ</h3>
+                        <p>お電話またはメールでお気軽にご連絡ください。日本語・英語対応可能です。</p>
+                    </div>
+                </div>
             </div>
-            <div class="step animate-on-scroll">
-                <div class="step-number">2</div>
-                <h3>無料お見積り</h3>
-                <p>現地確認の上、詳細なお見積りをご提示。ご予算に合わせたプランをご提案します。</p>
+            <div class="step-new step-left animate-on-scroll">
+                <div class="step-content">
+                    <div class="step-icon-container">
+                        <div class="step-icon-bg">
+                            <div class="step-icon">📝</div>
+                            <div class="step-sparkle">✨</div>
+                        </div>
+                    </div>
+                    <div class="step-text">
+                        <h3>2. 無料見積もり</h3>
+                        <p>現地確認の上、詳細な見積もりをご提示。ご予算に合わせたプランをご提案します。</p>
+                    </div>
+                </div>
             </div>
-            <div class="step animate-on-scroll">
-                <div class="step-number">3</div>
-                <h3>作業実施</h3>
-                <p>プロのスタッフが丁寧に清掃作業を実施。細部まで妥協のない仕上がりです。</p>
+            <div class="step-new step-right animate-on-scroll">
+                <div class="step-content">
+                    <div class="step-icon-container">
+                        <div class="step-icon-bg">
+                            <div class="step-icon">🧹</div>
+                            <div class="step-sparkle">✨</div>
+                        </div>
+                    </div>
+                    <div class="step-text">
+                        <h3>3. 作業実施・品質確認</h3>
+                        <p>プロのスタッフが丁寧に清掃作業を実施。作業完了後、お客様と一緒に仕上がりを確認します。</p>
+                    </div>
+                </div>
             </div>
-            <div class="step animate-on-scroll">
-                <div class="step-number">4</div>
-                <h3>品質確認</h3>
-                <p>作業完了後、お客様と一緒に仕上がりを確認。ご満足いただけるまで対応します。</p>
+            <div class="process-cta animate-on-scroll">
+                <a href="#contact" class="btn-process-cta">今すぐ無料見積もり</a>
             </div>
         </div>
     </section>
@@ -200,26 +310,38 @@
             <p>シドニー主要エリアでサービスを提供しています</p>
         </div>
         <div class="area-grid">
-            <div class="area-card animate-on-scroll">
-                <div class="area-icon">📍</div>
-                <h3><a href="service-areas/mosman.html" style="color: var(--primary-color); text-decoration: none;">Mosman</a></h3>
-                <p>高級住宅街として知られるMosmanエリア。富裕層のお客様に選ばれる清掃サービスを提供しています。</p>
-            </div>
-            <div class="area-card animate-on-scroll">
-                <div class="area-icon">📍</div>
-                <h3><a href="service-areas/palm-beach.html" style="color: var(--primary-color); text-decoration: none;">Palm Beach</a></h3>
-                <p>シドニー北部の美しいビーチエリア。リゾート感あふれる空間を、日本の洗剤で清潔に保ちます。</p>
-            </div>
-            <div class="area-card animate-on-scroll">
-                <div class="area-icon">📍</div>
-                <h3><a href="service-areas/bondi-beach.html" style="color: var(--primary-color); text-decoration: none;">Bondi Beach</a></h3>
-                <p>世界的に有名なBondi Beachエリア。Airbnbオーナー様向けの清掃サービスも充実しています。</p>
-            </div>
-            <div class="area-card animate-on-scroll">
-                <div class="area-icon">📍</div>
-                <h3><a href="service-areas/manly.html" style="color: var(--primary-color); text-decoration: none;">Manly</a></h3>
-                <p>シドニー北部の人気エリア。観光客も多いManlyで、日本品質の清掃サービスをご提供しています。</p>
-            </div>
+            <a href="service-areas/mosman.html" class="area-card-link" data-area="mosman">
+                <div class="area-card animate-on-scroll">
+                    <div class="area-icon">📍</div>
+                    <h3>Mosman</h3>
+                    <p>高級住宅街として知られるMosmanエリア。富裕層のお客様に選ばれる清掃サービスを提供しています。</p>
+                    <span class="card-link-indicator">詳細を見る →</span>
+                </div>
+            </a>
+            <a href="service-areas/palm-beach.html" class="area-card-link" data-area="palm-beach">
+                <div class="area-card animate-on-scroll">
+                    <div class="area-icon">📍</div>
+                    <h3>Palm Beach</h3>
+                    <p>シドニー北部の美しいビーチエリア。リゾート感あふれる空間を、日本の洗剤で清潔に保ちます。</p>
+                    <span class="card-link-indicator">詳細を見る →</span>
+                </div>
+            </a>
+            <a href="service-areas/bondi-beach.html" class="area-card-link" data-area="bondi-beach">
+                <div class="area-card animate-on-scroll">
+                    <div class="area-icon">📍</div>
+                    <h3>Bondi Beach</h3>
+                    <p>世界的に有名なBondi Beachエリア。Airbnbオーナー様向けの清掃サービスも充実しています。</p>
+                    <span class="card-link-indicator">詳細を見る →</span>
+                </div>
+            </a>
+            <a href="service-areas/manly.html" class="area-card-link" data-area="manly">
+                <div class="area-card animate-on-scroll">
+                    <div class="area-icon">📍</div>
+                    <h3>Manly</h3>
+                    <p>シドニー北部の人気エリア。観光客も多いManlyで、日本品質の清掃サービスをご提供しています。</p>
+                    <span class="card-link-indicator">詳細を見る →</span>
+                </div>
+            </a>
         </div>
     </section>
 
@@ -404,7 +526,6 @@
                     <p class="blog-excerpt">環境に優しい自然素材を使った掃除方法をご紹介。重曹やクエン酸を活用した安全で効果的なお掃除テクニック。</p>
                     <div class="blog-meta">
                         <span class="blog-date">2024.12.15</span>
-                        <a href="https://www.osoujikakumei.jp/house-cleaning/1" class="blog-read-more">続きを読む →</a>
                     </div>
                 </div>
             </article>
@@ -416,7 +537,6 @@
                     <p class="blog-excerpt">湿気の多い季節を前に、カビの発生を防ぐプロのテクニックを詳しく解説。予防から除去まで完全網羅。</p>
                     <div class="blog-meta">
                         <span class="blog-date">2024.12.10</span>
-                        <a href="https://www.happy-bears.com/" class="blog-read-more">続きを読む →</a>
                     </div>
                 </div>
             </article>
@@ -428,7 +548,6 @@
                     <p class="blog-excerpt">ゲストの期待を超える清潔さを実現。見落としがちなポイントから、効率的な清掃手順まで徹底解説。</p>
                     <div class="blog-meta">
                         <span class="blog-date">2024.12.05</span>
-                        <a href="https://www.kajier.jp/" class="blog-read-more">続きを読む →</a>
                     </div>
                 </div>
             </article>
@@ -463,10 +582,10 @@
     </section>
 
     <!-- 採用情報セクション -->
-    <section class="recruit" id="recruit" style="padding: 5rem 5%; background: linear-gradient(135deg, #0080cc, #4da6ff); color: white; text-align: center;">
+    <section class="recruit" id="recruit">
         <div class="section-header animate-on-scroll">
-            <h2 style="color: white; margin-bottom: 1rem;">日本品質を支える仲間を募集しています</h2>
-            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.95;">
+            <h2>日本品質を支える仲間を募集しています</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; max-width: 800px; margin-left: auto; margin-right: auto;">
                 シドニーで唯一の日本品質清掃サービスを共に創る仲間を募集中。<br>
                 おもてなしの心で空間を磨き上げることが好きな方、ぜひご応募ください。
             </p>
@@ -482,8 +601,7 @@
             <div class="cta-form-panel">
                 <div class="contact-form-container">
                     <div class="form-header">
-                        <div class="form-badge">✨ 無料見積り</div>
-                        <h3>今すぐお見積り依頼</h3>
+                        <h3>今すぐ無料見積もり</h3>
                         <p class="form-subtitle">
                             <span class="subtitle-icon">⚡</span>
                             <strong>最短30分以内</strong>にコーディネーターからご連絡します
@@ -503,16 +621,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-choice-group">
-                        <div class="choice-label">よくあるご依頼</div>
-                        <div class="choice-chips" data-target="service">
-                            <button type="button" data-value="airbnb">Airbnb</button>
-                            <button type="button" data-value="luxury">高級住宅</button>
-                            <button type="button" data-value="office">オフィス</button>
-                            <button type="button" data-value="deep">ディープ</button>
-                        </div>
-                    </div>
                     <form id="contactForm" class="contact-form">
+                        <div class="form-choice-group">
+                            <div class="choice-label">ご希望のサービス（複数選択可）</div>
+                            <div class="choice-chips" data-target="service">
+                                <button type="button" data-value="airbnb">Airbnb</button>
+                                <button type="button" data-value="luxury">高級住宅</button>
+                                <button type="button" data-value="office">オフィス</button>
+                                <button type="button" data-value="deep">ディープ</button>
+                                <button type="button" data-value="regular">定期清掃</button>
+                                <button type="button" data-value="other">その他</button>
+                            </div>
+                            <input type="hidden" id="service" name="service" required>
+                        </div>
                         <div class="form-grid">
                             <div class="form-group">
                                 <span class="input-icon">👤</span>
@@ -530,15 +651,7 @@
                             </div>
                             <div class="form-group">
                                 <span class="input-icon">🏠</span>
-                                <select id="service" name="service" required>
-                                    <option value="" disabled selected>ご希望のサービスを選択</option>
-                                    <option value="airbnb">Airbnb清掃</option>
-                                    <option value="luxury">高級住宅清掃</option>
-                                    <option value="office">オフィス清掃</option>
-                                    <option value="deep">ディープクリーニング</option>
-                                    <option value="regular">定期清掃プラン</option>
-                                    <option value="other">その他</option>
-                                </select>
+                                <input type="text" id="service-display" placeholder="上記から選択してください" readonly style="cursor: default; background: rgba(255, 255, 255, 0.6);">
                             </div>
                         </div>
                         <div class="form-group">
@@ -546,7 +659,7 @@
                             <textarea id="message" name="message" rows="4" placeholder="ご要望・ご質問などをお聞かせください"></textarea>
                         </div>
                         <button type="submit" class="submit-btn">
-                            <span class="btn-text">無料見積りを今すぐ依頼する</span>
+                            <span class="btn-text">無料見積もりを今すぐ依頼する</span>
                             <span class="btn-icon">→</span>
                         </button>
                         <p class="form-privacy">
